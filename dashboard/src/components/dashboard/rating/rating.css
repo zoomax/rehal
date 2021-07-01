@@ -1,0 +1,38 @@
+.rating-border a[href="/rating"] {
+  background: #2f4f4f 0% 0% no-repeat padding-box;
+  letter-spacing: 0.15px;
+  color: #f0f0f0;
+}
+.rating-border .rating {
+  margin: 65px 25px 0;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 10px;
+  padding: 18px 35px;
+}
+
+.rating .select-type {
+  display: flex;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 6px #00000080;
+  border-radius: 10px;
+  width: 192px;
+  padding: 0 14px;
+}
+.rating .select-type p {
+  font: normal normal normal 15px/25px Arial;
+  letter-spacing: 0.15px;
+  color: #2699fb;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+.rating .select-type select {
+  border: 0;
+  width: 120px;
+}
+.rating .select-type option {
+  text-transform: capitalize;
+  font: normal normal normal 15px/17px Arial;
+  letter-spacing: 0.15px;
+  color: #2f4f4f;
+}

@@ -1,0 +1,31 @@
+.rating-total {
+  text-align: center;
+  margin-top: 80px;
+  /* justify-content: space-between; */
+}
+.rating-total .row {
+  justify-content: center;
+}
+.rating-total h5 {
+  font: normal normal bold 16px/23px Arial;
+  letter-spacing: 0.2px;
+  color: #2f4f4f;
+}
+.rating-total p {
+  font: normal normal normal 16px/23px Arial;
+  letter-spacing: 0px;
+  color: #707070;
+  margin-bottom: 0;
+}
+.rating-total .border-bottom {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #0000006e;
+  border-radius: 20px;
+  height: 6px;
+  margin-top: 15px;
+}
+@media (max-width: 768px) {
+  .rating-total .col-12 {
+    margin-bottom: 30px;
+  }
+}

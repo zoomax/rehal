@@ -1,0 +1,95 @@
+.all-border .alls {
+  margin: 65px 25px 0;
+}
+.alls {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 10px;
+}
+.alls .col-md-4 {
+  margin-bottom: 20px;
+  padding: 0;
+}
+.alls .col-md-4 .row {
+  flex-wrap: nowrap;
+  margin: 0;
+}
+.all-border a[href="/profile"] {
+  background: #2f4f4f 0% 0% no-repeat padding-box;
+  letter-spacing: 0.15px;
+  color: #f0f0f0;
+}
+.alls .btns {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 10px;
+  width: 100%;
+  padding: 13px 40px;
+  font: normal normal bold 22px/31px Century Gothic;
+  letter-spacing: 1.25px;
+  color: #2f4f4f;
+  cursor: pointer;
+}
+.alls .fa {
+  float: right;
+  line-height: 31px;
+  font-weight: normal;
+}
+.alls .all-data {
+  padding: 34px 100px;
+}
+.alls .all-data .img {
+  width: 60px;
+  height: 60px;
+  border: 1px solid;
+  border-radius: 50%;
+  margin-right: 11px;
+}
+.alls .all-data .img img {
+  width: 45px;
+  height: 45px;
+  margin: 4px auto;
+  display: block;
+}
+.alls .row1,
+.alls .row2,
+.alls .row3 {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.alls h5 {
+  font: normal normal bold 18px/23px Arial;
+  letter-spacing: 0.2px;
+  color: #2f4f4f;
+  margin-right: 23px;
+}
+.alls .row1 img {
+  width: 20px;
+  height: 20px;
+}
+.alls .row2 p {
+  font: normal normal normal 15px/17px Arial;
+  letter-spacing: 0.15px;
+  color: #2f4f4f;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+.alls .row2 .fa {
+  width: 16px;
+  height: 16px;
+  color: yellow;
+  line-height: 17px;
+  margin-right: 10px;
+}
+
+.alls .row3 p {
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media (max-width: 1200px) {
+  .alls .all-data {
+    padding: 34px 50px;
+  }
+}

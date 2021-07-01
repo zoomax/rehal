@@ -1,0 +1,35 @@
+.add-content {
+  padding: 4% 13%;
+}
+.add-content .col-lg-4 div {
+  background: #dddddd 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  text-align: center;
+  font: normal normal normal 17px/44px Arial;
+  letter-spacing: 0.2px;
+  color: #2f4f4f;
+  height: 44px;
+  margin-bottom: 14px;
+  text-transform: capitalize;
+}
+.add-content img {
+  width: 55px;
+  float: right;
+  margin-top: 45px;
+}
+@media (max-width: 670px) {
+  .add-content {
+    padding: 4%;
+  }
+  .add-content .col-lg-4 div {
+    font: normal normal normal 14px/45px Arial;
+  }
+  .add-content .col-lg-4 {
+    padding: 0;
+    padding-left: 10px;
+  }
+  .add-content img {
+    width: 40px;
+    margin-top: 85px;
+  }
+}

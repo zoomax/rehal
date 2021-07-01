@@ -1,0 +1,54 @@
+.right-info .place,
+.right-info .city,
+.right-info .service,
+.right-info .rate {
+  background: #2f4f4f 0% 0% no-repeat padding-box;
+  border-radius: 10px 0px 0px 10px;
+  letter-spacing: 0.24px;
+  color: #ffffff;
+  height: 45px;
+  margin-bottom: 10px;
+  float: right;
+}
+.right-info p {
+  text-align: center;
+}
+.right-info .place {
+  font: normal normal bold 24px/41px Century Gothic;
+  width: 94%;
+}
+.right-info .city {
+  font: normal normal bold 24px/41px Century Gothic;
+  width: 83%;
+}
+.right-info .service {
+  font: normal normal bold 17px/41px Century Gothic;
+  width: 73%;
+}
+.right-info .rate {
+  font: normal normal bold 24px/41px Century Gothic;
+  width: 59%;
+}
+.right-info .rate .fa {
+  color: yellow;
+  margin-right: 4px;
+}
+@media (max-width: 730px) {
+  .right-info .place {
+    font: normal normal bold 18px/41px Century Gothic;
+  }
+  .right-info .city {
+    font: normal normal bold 18px/41px Century Gothic;
+  }
+  .right-info .service {
+    font: normal normal bold 14px/41px Century Gothic;
+  }
+  .right-info .rate {
+    font: normal normal bold 18px/41px Century Gothic;
+  }
+}
+@media (max-width: 575px) {
+  .right-info {
+    margin-top: 40px;
+  }
+}

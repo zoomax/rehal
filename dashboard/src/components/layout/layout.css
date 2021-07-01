@@ -1,0 +1,19 @@
+.shown {
+  margin-left: 217px;
+  transition: all 0.3s linear;
+}
+.hidden {
+  transition: all 0.3s linear;
+  margin-left: 0px;
+}
+main {
+  background-color: #dddddd;
+  min-height: 100vh;
+  /* margin-top: 65px; */
+}
+@media (max-width: 992px) {
+  .shown {
+    margin-left: 0px;
+    transition: all 0.3s linear;
+  }
+}
