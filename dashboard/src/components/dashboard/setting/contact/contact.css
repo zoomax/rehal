@@ -1,100 +1,125 @@
 .contact .fa {
-  width: 25px;
-  height: 25px;
-  font-size: 24px;
-  align-items: flex-start;
-  margin-right: 7px;
-  color: #2f4f4f;
+    width: 25px;
+    height: 25px;
+    font-size: 24px;
+    align-items: flex-start;
+    margin-right: 7px;
+    color: #2f4f4f;
 }
+
 .contact .row {
-  align-items: center;
-  margin-bottom: 30px;
+    align-items: center;
+    margin-bottom: 30px;
 }
+
 .contact .row .row .row {
-  margin: 0;
-  justify-content: space-between;
+    margin: 0;
+    justify-content: space-between;
 }
+
 .contact .col-md-5,
 .contact .col-md-2,
 .contact .col-10 {
-  padding: 0;
+    padding: 0;
 }
-.contact label {
-  font: normal normal bold 13px/15px Century Gothic;
-  letter-spacing: 0px;
-  color: #2f4f4f;
-  margin-bottom: 0;
-}
-.contact .form-control {
-  border: 0;
-  padding: 0;
-}
-.contact input {
-  font: normal normal normal 13px/15px Century Gothic;
-  letter-spacing: 0px;
-  color: #2f4f4f;
-  border-bottom: 1px solid grey !important;
-  border-radius: 0;
-}
-.contact input:focus {
-  box-shadow: none !important;
-}
-.contact .form-group {
-  margin-bottom: 0rem !important;
-  width: 80%;
-}
-.contact .fa-pencil {
-  background: #2f4f4f 0% 0% no-repeat padding-box;
-  color: #fff;
-  font-size: 10px;
-  display: block;
-  padding: 8px;
-  border-radius: 50%;
-}
-.contact .fa-google {
-  background: #2f4f4f;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 15px;
-  padding: 6px;
-}
-.contact .contact-icon {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #2f4f4f;
-  border-radius: 50%;
 
-  width: 46px;
-  height: 47px;
+.contact label {
+    font: normal normal bold 13px/15px Century Gothic;
+    letter-spacing: 0px;
+    color: #2f4f4f;
+    margin-bottom: 0;
 }
+
+.contact .form-control {
+    border: 0;
+    padding: 0;
+}
+
+.contact input {
+    font: normal normal normal 13px/15px Century Gothic;
+    letter-spacing: 0px;
+    color: #2f4f4f;
+    border-bottom: 1px solid grey !important;
+    border-radius: 0;
+}
+
+.contact input:focus {
+    box-shadow: none !important;
+}
+
+.contact .form-group {
+    margin-bottom: 0rem !important;
+    width: 80%;
+}
+
+.contact .fa-pencil {
+    background: #2f4f4f 0% 0% no-repeat padding-box;
+    color: #fff;
+    font-size: 10px;
+    display: block;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.contact .fa-google {
+    background: #2f4f4f;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 15px;
+    padding: 6px;
+}
+
+.contact .contact-icon {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #2f4f4f;
+    border-radius: 50%;
+    width: 46px;
+    height: 47px;
+}
+
 .contact .contact-icon img {
-  margin: 10px auto;
-  display: block;
-  width: 25px;
-  height: 25px;
+    margin: 10px auto;
+    display: block;
+    width: 25px;
+    height: 25px;
 }
+
 .contact .col-12 {
-  margin-bottom: 35px !important;
+    margin-bottom: 35px !important;
 }
 
 @media (max-width: 992px) {
-  .setting .content .contact {
-    padding: 55px 50px !important;
-  }
+    .setting .content .contact {
+        padding: 55px 50px !important;
+    }
 }
+
 @media (max-width: 580px) {
-  .setting .content .contact {
-    padding: 55px 0px !important;
-  }
+    .setting .content .contact {
+        padding: 55px 0px !important;
+    }
 }
+
 .contact .contact-icon {
-  float: right;
+    float: right;
 }
+
 @media (max-width: 400px) {
-  .contact .col-12 {
-    padding: 0;
-    padding-left: 8px;
-  }
-  .contact .contact-icon {
-    float: left;
-  }
+    .contact .col-12 {
+        padding: 0;
+        padding-left: 8px;
+    }
+    .contact .contact-icon {
+        float: left;
+    }
+}
+
+.none,
+.none:focus,
+.none:active {
+    border: none;
+    background: transparent !important;
+    width: 100%;
+    height: 100%;
+    outline: none;
 }

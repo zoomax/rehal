@@ -19,29 +19,29 @@ class TotalData extends React.Component {
   render() {
     let { data } = this.state;
     return (
-      <div className="total-data">
-        <div className="container">
-          <div className="row">
+      <div className='total-data'>
+        <div className='container'>
+          <div className='row'>
             {data.map((data, id) => {
               return (
-                <div className="col-md-4 col-3" key={id}>
+                <div className='col-md-4 col-3' key={id}>
                   <h5>{data.names}</h5>
                   <p>{data.value}</p>
-                  <div className="border-bottom"></div>
+                  <div className='border-bottom'></div>
                 </div>
               );
             })}
           </div>
-          <div className="row">
+          <div className='row'>
             <Button onClick={this.edit}>
-              Edit <i className="fa fa-cog"></i>
+              Edit <i className='fa fa-cog'></i>
             </Button>
             <Button>
-              Pop Up <i className="fa fa-arrow-up"></i>
+              Pop Up <i className='fa fa-arrow-up'></i>
             </Button>
           </div>
         </div>
-        {/* <Header /> */}
+        <Header />
       </div>
     );
   }
