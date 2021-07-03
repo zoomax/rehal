@@ -1,49 +1,210 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import check from "../../../../assets/images/check.svg";
 import "./addContent.css";
-export class AddContent extends React.Component {
-  state = {
-    data: [
-      { name: "name" },
-      { name: "city", clicked: true },
-      { name: "type" },
-      { name: "* times" },
-      { name: "descriptions" },
-      { name: "profile pic" },
-      { name: "* tickets" },
-      { name: "rate" },
-      { name: "media" },
-    ],
-  };
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { PlaceSchema } from "../../../../utils/validators/auth";
+import upload from "../../../../assets/images/upload.png";
+import loader from "../../../../assets/images/loader.gif";
+import { getRequest, postRequest } from "../../../../utils/http";
+import { getObjFromLocalStorage } from "../../../../utils/localStorage";
+import {
+  BASE_URL,
+  CITIES,
+  SERVICES,
+  NEW_PLACE,
+  PLACES,
+} from "../../../../utils/endpoints";
+import { connect } from "react-redux";
+export const Container = ({ cityClicked, title, storeCities }) => {
+  const user = getObjFromLocalStorage("user");
+  const [image, setImage] = useState(null);
+  const [cities, setCities] = useState(storeCities);
+  const [services, setServices] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(PlaceSchema),
+  });
+  // get citiess
+  useEffect(() => {
+    if (storeCities.length === 0) {
+      getRequest(`${BASE_URL}${CITIES}`).then((res) => {
+        const data = res.data.docs;
+        console.log(data);
+        setCities(data);
+      });
+    }
+  }, []);
+  // get services
+  useEffect(() => {
+    getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
+      const data = res.data.docs;
+      console.log(data);
+      setServices(data);
+    });
+  }, []);
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
-  render() {
-    let { data } = this.state;
-    return (
-      <div className="add-content">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-9 col-9">
-              <div className="col-m-12 row">
-                {data.map((data, id) => {
-                  return (
-                    <div className="col-lg-4 col-md-4 col-6" key={id}>
-                      <div
-                        onClick={data.clicked && this.props.cityClicked}
-                        style={{ cursor: data.clicked && "pointer" }}
-                      >
-                        {data.name === "city" ? this.props.title : data.name}
-                      </div>
-                    </div>
-                  );
-                })}
+  const onFileChange = (e) => {
+    e.preventDefault();
+    setImage(e.target.files[0]);
+  };
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(user);
+    const { lat, lng, name, address, service, city, rating } = data;
+    const placeFormData = {
+      name,
+      address,
+      service,
+      city,
+      rating,
+      lng,
+      lat,
+    };
+    setIsSubmitting(true);
+    const formData = new FormData();
+    Object.keys(placeFormData).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+    if (image) {
+      formData.append("image", image);
+    }
+    postRequest(
+      `${BASE_URL}${PLACES}${NEW_PLACE(data.city, data.service)}`,
+      formData,
+      {
+        headers: {
+          "auth-token": user.token,
+        },
+      },
+    )
+      .then((res) => {
+        console.log(res);
+        setIsSubmitting(false);
+      })
+      .catch((e) => {
+        setIsSubmitting(false);
+      });
+  };
+  return (
+    <div className='add-content'>
+      <div className='container'>
+        <form className='row' onSubmit={handleSubmit(onSubmit)}>
+          <div className='row'>
+            <div className='col-md-9 col-9'>
+              <div className='col-m-12 row'>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <input
+                    type='text'
+                    name='name'
+                    placeholder='place name'
+                    {...register("name")}
+                  />
+                </div>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <select
+                    type='text'
+                    name='city '
+                    placeholder='select City'
+                    {...register("city")}>
+                    <option value=''>Select City....</option>
+                    {cities.map((city, index) => {
+                      return (
+                        <option value={city.id} key={index}>
+                          {city.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <select
+                    name='city '
+                    placeholder='Select Service'
+                    {...register("service")}>
+                    <option value=''>Select Service....</option>
+                    {services.map((service, index) => {
+                      return (
+                        <option value={service.id} key={index}>
+                          {service.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <input
+                    type='text'
+                    name='address'
+                    placeholder='Address'
+                    {...register("address")}
+                  />
+                </div>
+
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <input
+                    type='text'
+                    name='lat'
+                    placeholder='Latitude'
+                    {...register("lat")}
+                  />
+                </div>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <input
+                    type='text'
+                    name='lng'
+                    placeholder='lngitude'
+                    {...register("lng")}
+                  />
+                </div>
+                <div className='col-lg-4 col-md-4 col-6'>
+                  <input
+                    type='number'
+                    name='rating'
+                    placeholder='Add Rating...'
+                    {...register("rating")}
+                  />
+                </div>
+                <div className='col-lg-4 col-md-4 col-6 '>
+                  <input
+                    type='file'
+                    name='rating'
+                    placeholder='Select An Image'
+                    accept='image/*'
+                    onChange={(e) => onFileChange(e)}
+                  />
+                  <div className='file'>
+                    <span className={image ? "text-primary" : ""}>
+                      {image ? "image selected" : "Upload Image"}
+                    </span>
+                    <img src={upload} width='15px' alt='' />
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-md-3 col-3">
-              <img src={check} alt="img" />
+            <div className='col-md-3 col-3'>
+              <button className='none' type='submit'>
+                <img src={isSubmitting ? loader : check} alt='img' />
+              </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+const mapStateToProps = ({ cities }) => {
+  return {
+    storeCities: cities,
+  };
+};
+export const AddContent = connect(mapStateToProps)(Container);

@@ -13,7 +13,7 @@ import {
 } from "../../utils/localStorage";
 import { BASE_URL, LOGIN } from "../../utils/endpoints";
 export const Login = () => {
-  const [user, setUser] = useState(getObjFromLocalStorage("user"));
+  const [user,] = useState(getObjFromLocalStorage("user"));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
   if (user) history.push("/dashboard");

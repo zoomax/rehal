@@ -1,35 +1,70 @@
 .add-content {
-  padding: 4% 13%;
+    padding: 4% 13%;
 }
-.add-content .col-lg-4 div {
-  background: #dddddd 0% 0% no-repeat padding-box;
-  border-radius: 20px;
-  text-align: center;
-  font: normal normal normal 17px/44px Arial;
-  letter-spacing: 0.2px;
-  color: #2f4f4f;
-  height: 44px;
-  margin-bottom: 14px;
-  text-transform: capitalize;
+
+.add-content .col-lg-4 input,
+.add-content .col-lg-4 select,
+.add-content .col-lg-4 .file {
+    background: #dddddd 0% 0% no-repeat padding-box;
+    border-radius: 20px;
+    text-align: center;
+    font: normal normal normal 17px/44px Arial;
+    letter-spacing: 0.2px;
+    color: #2f4f4f;
+    height: 44px;
+    margin-bottom: 14px;
+    text-transform: capitalize;
+    width: 100%;
+    position: relative;
 }
+
+.add-content .col-lg-4 input[type=file] {
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+}
+
 .add-content img {
-  width: 55px;
-  float: right;
-  margin-top: 45px;
+    width: 55px;
+    float: right;
+    margin-top: 45px;
 }
+
 @media (max-width: 670px) {
-  .add-content {
-    padding: 4%;
-  }
-  .add-content .col-lg-4 div {
-    font: normal normal normal 14px/45px Arial;
-  }
-  .add-content .col-lg-4 {
-    padding: 0;
-    padding-left: 10px;
-  }
-  .add-content img {
-    width: 40px;
-    margin-top: 85px;
-  }
+    .add-content {
+        padding: 4%;
+    }
+    .add-content .col-lg-4 div {
+        font: normal normal normal 14px/45px Arial;
+    }
+    .add-content .col-lg-4 {
+        padding: 0;
+        padding-left: 10px;
+    }
+    .add-content img {
+        width: 40px;
+        margin-top: 85px;
+    }
+}
+
+
+/* s */
+
+.add-content .col-lg-4 .file {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0 10px;
+    width: calc(100% - 30px);
+    margin-left: 13px;
+    padding: 0px 10px;
+    border: 2px solid #000;
+}
+
+.file img {
+    margin: 5px;
+    width: 30px;
 }

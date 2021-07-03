@@ -12,3 +12,38 @@ export const ContactSchema = yup.object().shape({
   name: yup.string(),
   address: yup.string(),
 });
+
+export const PlaceSchema = yup.object().shape({
+  name: yup.string().required(),
+  address: yup.string().required(),
+  city: yup.number().required(),
+  service: yup.number().required(),
+  rating: yup.number().min(1).max(5).required(),
+  lat: yup
+    .string()
+    .required()
+    .matches(/^(-?\d+(\.\d+)?)$/),
+  lng: yup
+    .string()
+    .required()
+    .matches(/^(-?\d+(\.\d+)?)$/),
+});
+export const EditPlaceSchema = yup.object().shape({
+  name: yup.string().required(),
+  address: yup.string().required(),
+  service: yup.number().required(),
+  rating: yup.number().min(1).max(5).required(),
+  lat: yup
+    .string()
+    .required()
+    .matches(/^(-?\d+(\.\d+)?)$/),
+  lng: yup
+    .string()
+    .required()
+    .matches(/^(-?\d+(\.\d+)?)$/),
+});
+
+export const RemovePlaceSchema = yup.object().shape({
+  city: yup.string().required(),
+  place: yup.string().required(),
+});

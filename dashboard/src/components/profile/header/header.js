@@ -92,7 +92,7 @@ export class Header extends React.Component {
     fetch(
       "https://reqres.in/api/postshttps://rehalapp2021.herokuapp.com/cities/" +
         cityId,
-      requestOptions
+      requestOptions,
     ).then((response) => response.json());
   };
   modifyClicked = () => {
@@ -100,25 +100,27 @@ export class Header extends React.Component {
   };
   render() {
     return (
-      <div className="profile-header">
-        <div className="all">
-          <div className="btns">
-            Add <i className="fa fa-chevron-down"></i>
+      <div className='profile-header'>
+        <div className='all'>
+          <div className='btns'>
+            Add <i className='fa fa-chevron-down'></i>
           </div>{" "}
-          <div className="content">
+          <div className='content'>
             {" "}
             <AddContent
               cityClicked={this.cityClicked}
               selectTitle={this.state.selectTitle}
               title={this.state.title}
+              cities={[]}
+              services={[]}
             />
           </div>
         </div>
-        <div className="all">
-          <div className="btns">
-            Remove <i className="fa fa-chevron-down"></i>
+        <div className='all'>
+          <div className='btns'>
+            Remove <i className='fa fa-chevron-down'></i>
           </div>{" "}
-          <div className="content">
+          <div className='content'>
             {" "}
             <RemoveContent
               nameClicked={this.nameClicked}
@@ -127,11 +129,11 @@ export class Header extends React.Component {
             {this.state.openName && <NameContent />}
           </div>
         </div>
-        <div className="all" id="modify">
-          <div className="btns">
-            Modify <i className="fa fa-chevron-down"></i>
+        <div className='all' id='modify'>
+          <div className='btns'>
+            Modify <i className='fa fa-chevron-down'></i>
           </div>{" "}
-          <div className="content">
+          <div className='content'>
             {" "}
             <ModifyContent
               modifyClicked={this.modifyClicked}
@@ -140,11 +142,11 @@ export class Header extends React.Component {
             {this.state.modify && <ModifyData />}
           </div>
         </div>
-        <div className="all">
-          <div className="btns">
-            Show All <i className="fa fa-chevron-down"></i>
+        <div className='all'>
+          <div className='btns'>
+            Show All <i className='fa fa-chevron-down'></i>
           </div>{" "}
-          <div className="content">
+          <div className='content'>
             {" "}
             <ShowAllContent />
           </div>

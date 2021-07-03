@@ -1,30 +1,94 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import arrow from "../../../../assets/images/arrow.svg";
-import "./showAllContent.css";
-import { withRouter } from "react-router";
-const ShowAllContent = (props) => {
-  const redirect = () => {
-    props.history.push("/profile/all");
+import loader from "../../../../assets/images/loader.gif";
+import { getRequest } from "../../../../utils/http";
+import { useHistory } from "react-router-dom";
+import { BASE_URL, CITIES, PLACES } from "../../../../utils/endpoints";
+import { connect } from "react-redux";
+import { setPlaces } from "../../../../redux-store/actions/placesActions";
+export const Container = ({ setPlaces, storeCities }) => {
+  const [cities, setCities] = useState(storeCities);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [city, setCity] = useState("");
+  const history = useHistory();
+  // get citiess
+  useEffect(() => {
+    if (storeCities.length === 0) {
+      getRequest(`${BASE_URL}${CITIES}`).then((res) => {
+        const data = res.data.docs;
+        console.log(data);
+        setCities(data);
+      });
+    }
+  }, [storeCities.length]);
+  const getPlaces = (id) => {
+    getRequest(`${BASE_URL}${PLACES}/cities/${id}`)
+      .then((res) => {
+        console.log(res.data.docs);
+        setPlaces(res.data.docs);
+        setIsSubmitting(false);
+        history.push("/profile/all");
+      })
+      .catch(() => setIsSubmitting(false));
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!city) return;
+
+    setIsSubmitting(true);
+    getPlaces(city);
   };
   return (
-    <div className="showAll-content">
-      {" "}
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8 col-9">
-            <div className="row col-12">
-              <div className="col-md-3 col-12">City</div>
-              <div className="col-md-3 col-12">Types</div>
+    <div className='add-content'>
+      <div className='container'>
+        <form
+          className='row'
+          onSubmit={(e) => {
+            onSubmit(e);
+          }}>
+          <div className='col-md-9 col-9'>
+            <div className='col-m-12 row'>
+              <div className='col-lg-4 col-md-4 col-6'>
+                <select
+                  type='text'
+                  name='city '
+                  placeholder='select City'
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}>
+                  <option value=''>Select City....</option>
+                  {cities.map((city, index) => {
+                    return (
+                      <option value={city.id} key={index}>
+                        {city.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
           </div>
-          <div className="col-md-4 col-3">
-            <div className="img-border">
-              <img src={arrow} alt="arrow" onClick={redirect} />
-            </div>
+          <div className='col-md-3 col-3'>
+            <button
+              className={!isSubmitting ? "none min" : "none"}
+              type='submit'>
+              <img src={isSubmitting ? loader : arrow} alt='img' />
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 };
-export default withRouter(ShowAllContent);
+
+const mapStateToProps = ({ cities }) => {
+  return {
+    storeCities: cities,
+  };
+};
+const mapDispathToProps = (dispatch) => {
+  return {
+    setPlaces: (payload) => dispatch(setPlaces(payload)),
+  };
+};
+export default connect(mapStateToProps, mapDispathToProps)(Container);
