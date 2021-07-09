@@ -67,7 +67,7 @@ export const Container = ({ cityClicked, title, storeCities }) => {
         setCities(data);
       });
     }
-  }, []);
+  }, [storeCities.length]);
   // getting services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
@@ -127,9 +127,9 @@ export const Container = ({ cityClicked, title, storeCities }) => {
       },
     })
       .then((res) => {
-        console.log(res);
         setIsSubmitting(false);
         reset();
+        setImage(null);
       })
       .catch((e) => {
         setIsSubmitting(false);

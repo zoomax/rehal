@@ -3,6 +3,7 @@ import { Layout } from "../../layout/layout";
 import { AboutContent } from "./aboutContent/aboutContent";
 import { Contact } from "./contact/contact";
 import { FaqContent } from "./faqContent/faqContent";
+import { Password } from "./password/password";
 import "./setting.css";
 export class Setting extends React.Component {
   componentDidMount() {
@@ -24,30 +25,38 @@ export class Setting extends React.Component {
   }
   render() {
     return (
-      <div className="setting-border">
+      <div className='setting-border'>
         <Layout>
-          <div className="setting">
-            <div className="all-settings">
-              <div className="btns">
-                Account Settings <i className="fa fa-chevron-down"></i>
+          <div className='setting'>
+            <div className='all-settings'>
+              <div className='btns'>
+                Account Settings <i className='fa fa-chevron-down'></i>
               </div>
-              <div className="content">
+              <div className='content'>
                 <Contact />
               </div>
             </div>
-            <div className="all-settings">
-              <div className="btns">
-                About Us <i className="fa fa-chevron-down"></i>
+            <div className='all-settings'>
+              <div className='btns'>
+               Password Change <i className='fa fa-chevron-down'></i>
               </div>
-              <div className="content">
+              <div className='content'>
+                <Password />
+              </div>
+            </div>
+            <div className='all-settings'>
+              <div className='btns'>
+                About Us <i className='fa fa-chevron-down'></i>
+              </div>
+              <div className='content'>
                 <AboutContent />
               </div>
             </div>
-            <div className="all-settings">
-              <div className="btns">
-                FAQ <i className="fa fa-chevron-down"></i>
+            <div className='all-settings'>
+              <div className='btns'>
+                FAQ <i className='fa fa-chevron-down'></i>
               </div>
-              <div className="content">
+              <div className='content'>
                 <FaqContent />
               </div>
             </div>

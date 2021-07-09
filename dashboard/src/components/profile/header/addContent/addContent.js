@@ -15,18 +15,25 @@ import {
   NEW_PLACE,
   PLACES,
 } from "../../../../utils/endpoints";
+import { setServices } from "../../../../redux-store/actions/servicesActions";
+import { setCities } from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
-export const Container = ({ cityClicked, title, storeCities }) => {
+export const Container = ({
+  storeCities,
+  storeServices,
+  setStoreCities,
+  setStoreServices,
+}) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
   const [cities, setCities] = useState(storeCities);
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState(storeServices);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(PlaceSchema),
   });
@@ -35,19 +42,20 @@ export const Container = ({ cityClicked, title, storeCities }) => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data.docs;
-        console.log(data);
         setCities(data);
+        setStoreCities(data);
       });
     }
-  }, []);
+  }, [setStoreCities, storeCities.length]);
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
       const data = res.data.docs;
       console.log(data);
       setServices(data);
+      setStoreServices(data);
     });
-  }, []);
+  }, [setStoreServices]);
   useEffect(() => {
     console.log(errors);
   }, [errors]);
@@ -89,6 +97,7 @@ export const Container = ({ cityClicked, title, storeCities }) => {
       .then((res) => {
         console.log(res);
         setIsSubmitting(false);
+        reset();
       })
       .catch((e) => {
         setIsSubmitting(false);
@@ -161,7 +170,7 @@ export const Container = ({ cityClicked, title, storeCities }) => {
                   <input
                     type='text'
                     name='lng'
-                    placeholder='lngitude'
+                    placeholder='longitude'
                     {...register("lng")}
                   />
                 </div>
@@ -202,9 +211,20 @@ export const Container = ({ cityClicked, title, storeCities }) => {
   );
 };
 
-const mapStateToProps = ({ cities }) => {
+const mapStateToProps = ({ cities, services }) => {
   return {
     storeCities: cities,
+    storeServices: services,
   };
 };
-export const AddContent = connect(mapStateToProps)(Container);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setStoreCities: (payload) => dispatch(setCities(payload)),
+    setStoreServices: (payload) => dispatch(setServices(payload)),
+  };
+};
+export const AddContent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Container);

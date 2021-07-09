@@ -5,3 +5,4 @@ export const CITIES = "cities/";
 export const PLACES = "places/";
 export const NEW_PLACE = (city, service) =>
   `new/cities/${city}/services/${service}`;
+export const PLACE_RATES = (placeId) => `rates/places/${placeId}`;

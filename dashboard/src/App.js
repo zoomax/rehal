@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Routes } from "./routes/routes";
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <BrowserRouter>
         <Switch>
           {Routes.map((route, index) => (
@@ -13,6 +13,12 @@ function App() {
               component={route.component}
             />
           ))}
+          <Route
+            path='**'
+            render={() => {
+              return <Redirect path='/dashboard' />;
+            }}
+          />
         </Switch>
       </BrowserRouter>
     </div>

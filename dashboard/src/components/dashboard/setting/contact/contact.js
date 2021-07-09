@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import contactIcon from "../../../../assets/images/c.svg";
+import loader from "../../../../assets/images/loader.gif";
 import "./contact.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactSchema } from "../../../../utils/validators/auth";
-import { getObjFromLocalStorage } from "../../../../utils/localStorage";
+import {
+  getObjFromLocalStorage,
+  setObjToLocalStorage,
+} from "../../../../utils/localStorage";
+import { putRequest } from "../../../../utils/http";
+import { BASE_URL } from "../../../../utils/endpoints";
 export const Contact = () => {
-  const [user, setUser] = useState(getObjFromLocalStorage("user").user);
+  const [user, setUser] = useState(getObjFromLocalStorage("user"));
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [image, setImage] = useState(null);
   const {
     register,
     formState: { errors },
@@ -15,18 +23,53 @@ export const Contact = () => {
   } = useForm({
     resolver: yupResolver(ContactSchema),
   });
-  const keys = ["name", "email"];
-  function fillForm(keys, obj) {
-    keys.forEach((key) => {
-      setValue(key, obj[key]);
-    });
-  }
+
   useEffect(() => {
-    fillForm(keys, user);
-    console.log(errors);
-  }, [errors, fillForm]);
+    const keys = ["name", "email", "lat", "lng", "phone"];
+    function fillForm(keys, obj) {
+      keys.forEach((key) => {
+        setValue(key, obj[key]);
+      });
+    }
+    fillForm(keys, user.user);
+  }, []);
+  //errors, setValue, user.user
+  function onFileChange(e) {
+    const file = e.target.files[0];
+    console.log(file);
+    if (file) {
+      return setImage(file);
+    }
+    return setImage(null);
+  }
+
   function onSubmit(data) {
+    // setIsSubmitting(true);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+    if (image) {
+      formData.append("image", image);
+    }
     console.log(data);
+    setIsSubmitting(true);
+    putRequest(`${BASE_URL}users/edit`, formData, {
+      headers: {
+        "auth-token": user.token,
+      },
+    })
+      .then((res) => {
+        setIsSubmitting(false);
+        const data = res.data;
+        console.log(data);
+        setUser({ ...user, user: data });
+        setObjToLocalStorage("user", JSON.stringify(user));
+      })
+      .catch((error) => {
+        setIsSubmitting(false);
+        console.log(error);
+      });
   }
   return (
     <div className='contact'>
@@ -48,6 +91,9 @@ export const Contact = () => {
                       placeholder='UserName'
                       {...register("name")}
                     />
+                    {errors.name && (
+                      <p className='text-danger'>{errors.name.message}</p>
+                    )}
                   </div>
                 </div>
                 <div className='col-12 row'>
@@ -63,20 +109,26 @@ export const Contact = () => {
                       placeholder='UserName@gmail.com'
                       {...register("email")}
                     />
+                    {errors.email && (
+                      <p className='text-danger'>{errors.email.message}</p>
+                    )}
                   </div>
                 </div>
+
                 <div className='col-12 row'>
-                  <i className='fa fa-lock'></i>
+                  <i className='fa fa-picture-o'></i>
                   <div className='form-group'>
                     <div className='row'>
-                      <label>Password</label>
+                      <label>Profile Image</label>
                       <i className='fa fa-pencil'></i>
                     </div>
                     <input
-                      type='password'
+                      type='file'
                       className='form-control'
-                      placeholder='************'
-                      {...register("password")}
+                      accept='image/*'
+                      onChange={(e) => {
+                        onFileChange(e);
+                      }}
                     />
                   </div>
                 </div>
@@ -96,29 +148,56 @@ export const Contact = () => {
                       placeholder='00000000000'
                       {...register("phone")}
                     />
+                    {errors.phone && (
+                      <p className='text-danger'>{errors.phone.message}</p>
+                    )}
                   </div>
                 </div>
                 <div className='col-12 row'>
                   <i className='fa fa-map-marker'></i>
                   <div className='form-group'>
                     <div className='row'>
-                      <label>Address</label>
+                      <label>Langitude</label>
                       <i className='fa fa-pencil'></i>
                     </div>
                     <input
                       type='text'
                       className='form-control'
-                      placeholder='Address'
-                      {...register("addres")}
+                      placeholder='00.0000000'
+                      {...register("lng")}
                     />
+                    {errors.lng && (
+                      <p className='text-danger'>{errors.lng.message}</p>
+                    )}
+                  </div>
+                </div>
+                <div className='col-12 row'>
+                  <i className='fa fa-map-marker'></i>
+                  <div className='form-group'>
+                    <div className='row'>
+                      <label>Latitude</label>
+                      <i className='fa fa-pencil'></i>
+                    </div>
+                    <input
+                      type='text'
+                      className='form-control'
+                      placeholder='00.0000000'
+                      {...register("lat")}
+                    />
+                    {errors.lat && (
+                      <p className='text-danger'>{errors.lat.message}</p>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             <div className='col-md-2 col-2'>
               <div className='contact-icon '>
-                <button type='submit' className='none'>
-                  <img src={contactIcon} alt='contact' />
+                <button type='submit' disabled={isSubmitting} className='none'>
+                  <img
+                    src={isSubmitting ? loader : contactIcon}
+                    alt='contact'
+                  />
                 </button>
               </div>
             </div>

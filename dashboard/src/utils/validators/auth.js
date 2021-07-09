@@ -5,12 +5,16 @@ export const LoginSchema = yup.object().shape({
   password: yup.string().required(),
 });
 
+export const PasswordSchema = yup.object().shape({
+  newPassword: yup.string().required(),
+  oldPassword: yup.string().required(),
+});
 export const ContactSchema = yup.object().shape({
   email: yup.string().email(),
-  password: yup.string(),
-  phone: yup.string().matches(/^01[0-2]\s\d{1,8}$/),
+  phone: yup.string().matches(/^01[0-2]\d{1,8}$/),
   name: yup.string(),
-  address: yup.string(),
+  lat: yup.string().matches(/^(-?\d+(\.\d+)?)$/),
+  lng: yup.string().matches(/^(-?\d+(\.\d+)?)$/),
 });
 
 export const PlaceSchema = yup.object().shape({

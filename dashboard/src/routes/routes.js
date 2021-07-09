@@ -38,7 +38,7 @@ export const Routes = [
     component: Places,
   },
   {
-    path: "/rating",
+    path: "/rating/:id",
     exact: true,
     component: Rating,
   },

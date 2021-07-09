@@ -20,11 +20,11 @@ export const Sidebar = (props) => {
             Best Places<i className="fa fa-heart"></i>
           </Links>
         </li>
-        <li>
+        {/* <li>
           <Links to="/rating">
             Rating <i className="fa fa-star"></i>
           </Links>
-        </li>
+        </li> */}
         <li>
           <Links to="/setting">
             Settings<i className="fa fa-cog"></i>
