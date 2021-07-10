@@ -40,7 +40,7 @@ const All = ({ places, services, cities }) => {
                     onClick={() => {
                       getPlaceRating(place.id);
                     }}
-                    className='col-md-4 col-sm-6 col-12'
+                    className='col-md-4 col-sm-6 col-12 place-card'
                     key={key}>
                     <div className='row'>
                       <div className='img'>

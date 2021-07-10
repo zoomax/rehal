@@ -1,8 +1,39 @@
 .dashboard-border a[href="/dashboard"] {
-  background: #2f4f4f 0% 0% no-repeat padding-box;
-  letter-spacing: 0.15px;
-  color: #f0f0f0;
+    background: #2f4f4f 0% 0% no-repeat padding-box;
+    letter-spacing: 0.15px;
+    color: #f0f0f0;
 }
+
 .dashboard-border .dashboard {
-  margin: 65px 25px 0;
+    margin: 65px 25px 0;
+}
+
+.dashboard .select-type {
+    display: flex;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 1px 6px #00000080;
+    border-radius: 10px;
+    max-width: 250px;
+    padding: 0 14px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.dashboard .select-type p {
+    font: normal normal normal 15px/25px Arial;
+    letter-spacing: 0.15px;
+    color: #2699fb;
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.dashboard .select-type select {
+    border: 0;
+}
+
+.dashboard .select-type option {
+    text-transform: capitalize;
+    font: normal normal normal 15px/17px Arial;
+    letter-spacing: 0.15px;
+    color: #2f4f4f;
 }

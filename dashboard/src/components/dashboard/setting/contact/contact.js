@@ -68,7 +68,7 @@ export const Contact = () => {
       })
       .catch((error) => {
         setIsSubmitting(false);
-        console.log(error);
+        console.log(error);   
       });
   }
   return (

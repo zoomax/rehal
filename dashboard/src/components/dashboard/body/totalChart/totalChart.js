@@ -79,7 +79,6 @@ export class TotalChart extends Component {
     let { data, options } = this.state;
     return (
       <div className="tourist-chart">
-        {" "}
         <Line data={data} options={options} />
       </div>
     );

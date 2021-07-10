@@ -16,6 +16,14 @@ export const ContactSchema = yup.object().shape({
   lat: yup.string().matches(/^(-?\d+(\.\d+)?)$/),
   lng: yup.string().matches(/^(-?\d+(\.\d+)?)$/),
 });
+export const CitySchema = yup.object().shape({
+  postalCode: yup
+    .string()
+    .matches(/^[0-9]{5}$/)
+    .required(),
+  name: yup.string().required(),
+  services: yup.array(yup.string().required()),
+});
 
 export const PlaceSchema = yup.object().shape({
   name: yup.string().required(),
@@ -50,4 +58,10 @@ export const EditPlaceSchema = yup.object().shape({
 export const RemovePlaceSchema = yup.object().shape({
   city: yup.string().required(),
   place: yup.string().required(),
+});
+export const RemoveCitySchema = yup.object().shape({
+  city: yup.string().required(),
+});
+export const ServiceSchema = yup.object().shape({
+  name: yup.string().required(),
 });

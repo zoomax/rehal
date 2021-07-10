@@ -97,7 +97,8 @@
 }
 
 .alls .row3 p {
-    width: 100px;
+    display: block;
+    width: 200px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -111,4 +112,15 @@
 
 .place-card:hover {
     cursor: pointer
+}
+
+.service-badge {
+    display: inline-block;
+    margin: 3px;
+    background: #999;
+    ;
+    border-radius: 5px;
+    padding: 2px 3px;
+    color: #fff;
+    text-transform: capitalize;
 }

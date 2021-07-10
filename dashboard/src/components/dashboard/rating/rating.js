@@ -7,12 +7,18 @@ import { connect } from "react-redux";
 import { getRequest } from "../../../utils/http";
 import { BASE_URL, PLACE_RATES } from "../../../utils/endpoints";
 import { useParams, useHistory } from "react-router";
+import { getObjFromLocalStorage } from "../../../utils/localStorage";
 export const Container = () => {
+  const user = getObjFromLocalStorage("user");
   const [placeRates, setPlaceRates] = useState([]);
   const { id } = useParams();
   const history = useHistory();
   useEffect(() => {
-    getRequest(`${BASE_URL}${PLACE_RATES(id)}`)
+    getRequest(`${BASE_URL}${PLACE_RATES(id)}`, {
+      headers: {
+        "auth-token": user.token,
+      },
+    })
       .then((res) => {
         const docs = res.data.docs;
         console.log(docs);
