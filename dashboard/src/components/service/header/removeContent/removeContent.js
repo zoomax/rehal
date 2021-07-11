@@ -8,6 +8,7 @@ import { deleteRequest, getRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({ storeServices }) => {
   const user = getObjFromLocalStorage("user");
   const [services, setServices] = useState(storeServices);
@@ -24,15 +25,19 @@ export const Container = ({ storeServices }) => {
   useEffect(() => {
     if (storeServices.length === 0) {
       getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setServices(data);
       });
     }
   }, [storeServices.length]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
+
   const onSubmit = (data) => {
     console.log(data);
     const { name } = data;
@@ -46,9 +51,12 @@ export const Container = ({ storeServices }) => {
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("Service has been deleted successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

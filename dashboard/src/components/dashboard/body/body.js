@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import "./body.css";
-import { TouristIcon } from "../../elements/touristIcon/touristIcon";
+// import { TouristIcon } from "../../elements/touristIcon/touristIcon";
 import { Chart } from "./chart/chart";
-import { Hospital } from "../../elements/hospital/hospital";
-import { Clubs } from "../../elements/clubs/clubs";
-import { Food } from "../../elements/food/food";
+// import { Hospital } from "../../elements/hospital/hospital";
+// import { Clubs } from "../../elements/clubs/clubs";
+// import { Food } from "../../elements/food/food";
 import { TotalChart } from "./totalChart/totalChart";
 export const Body = (props) => {
   const { places, getTotalRates, id, services } = props;
@@ -20,69 +20,69 @@ export const Body = (props) => {
     name: "total",
     image: "",
     ...getTotalRates("total", places),
-    chartData: ["0", " ", "", "", "90", "", 100, "", "", 70], 
+    chartData: ["0", " ", "", "", "90", "", 100, "", "", 70],
   });
-  const data = [
-    {
-      name: "total",
-      page: 22555,
-      Notification: 225551,
-      comments: 3000,
-      objects: 444,
-      status: 5555,
-      borderColor: "gray",
-    },
-    {
-      name: "1",
-      page: 22555,
-      Notification: 225551,
-      comments: 3000,
-      objects: 444,
-      status: 5555,
-      icon: <TouristIcon />,
-      chartData: ["0", " ", "", "", "90", "", 199, "", "", 70],
-      borderColor: "gray",
-    },
-    {
-      name: "2",
-      page: 22555,
-      Notification: 225552,
-      comments: 3000,
-      objects: 444,
-      status: 5555,
-      icon: <Food />,
-      chartData: ["0", " ", "", "", "90", "", 300, "", "", 70],
-      borderColor: "#FF00B2",
-    },
-    {
-      name: "3",
-      page: 22555,
-      Notification: 225553,
-      comments: 3000,
-      objects: 444,
-      status: 5555,
-      icon: <Hospital />,
-      chartData: ["0", " ", "", "", "90", "", 100, "", "", 70],
-      borderColor: "#EC8181",
-    },
-    {
-      name: "4",
-      page: 22555,
-      Notification: 225554,
-      comments: 3000,
-      objects: 444,
-      status: 5555,
-      icon: <Clubs />,
-      chartData: ["0", " ", "", "", "90", "", 39, "", "", 70],
-      borderColor: "#00FF00",
-    },
-  ];
+  // const data = [
+  //   {
+  //     name: "total",
+  //     page: 22555,
+  //     Notification: 225551,
+  //     comments: 3000,
+  //     objects: 444,
+  //     status: 5555,
+  //     borderColor: "gray",
+  //   },
+  //   {
+  //     name: "1",
+  //     page: 22555,
+  //     Notification: 225551,
+  //     comments: 3000,
+  //     objects: 444,
+  //     status: 5555,
+  //     icon: <TouristIcon />,
+  //     chartData: ["0", " ", "", "", "90", "", 199, "", "", 70],
+  //     borderColor: "gray",
+  //   },
+  //   {
+  //     name: "2",
+  //     page: 22555,
+  //     Notification: 225552,
+  //     comments: 3000,
+  //     objects: 444,
+  //     status: 5555,
+  //     icon: <Food />,
+  //     chartData: ["0", " ", "", "", "90", "", 300, "", "", 70],
+  //     borderColor: "#FF00B2",
+  //   },
+  //   {
+  //     name: "3",
+  //     page: 22555,
+  //     Notification: 225553,
+  //     comments: 3000,
+  //     objects: 444,
+  //     status: 5555,
+  //     icon: <Hospital />,
+  //     chartData: ["0", " ", "", "", "90", "", 100, "", "", 70],
+  //     borderColor: "#EC8181",
+  //   },
+  //   {
+  //     name: "4",
+  //     page: 22555,
+  //     Notification: 225554,
+  //     comments: 3000,
+  //     objects: 444,
+  //     status: 5555,
+  //     icon: <Clubs />,
+  //     chartData: ["0", " ", "", "", "90", "", 39, "", "", 70],
+  //     borderColor: "#00FF00",
+  //   },
+  // ];
 
   // const { places, getTotalRates, id  , services} = props;
   // const data  = getTotalRates(id, places) ;
   useEffect(() => {
     console.log("from dashboard body", getTotalRates(id, places));
-  }, [places, id]);
+  }, [places, id, getTotalRates]);
   return (
     <div className='dashboard-body'>
       {servicesData.map((item, index) => {

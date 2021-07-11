@@ -6,8 +6,9 @@ import deleteImg from "../../../../assets/images/delete.svg";
 import loader from "../../../../assets/images/loader.gif";
 import { deleteRequest, getRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
-import { BASE_URL, CITIES, PLACES } from "../../../../utils/endpoints";
+import { BASE_URL, CITIES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({ storeCities }) => {
   const user = getObjFromLocalStorage("user");
   const [cities, setCities] = useState(storeCities);
@@ -24,14 +25,17 @@ export const Container = ({ storeCities }) => {
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setCities(data);
       });
     }
   }, [storeCities.length]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
   const onSubmit = (data) => {
     console.log(data);
@@ -46,9 +50,12 @@ export const Container = ({ storeCities }) => {
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("City has been deleted successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

@@ -1,16 +1,16 @@
 import React from "react";
 import { Button } from "../../../../elements/button/button";
 import "./chooseCity.css";
-import axios from "axios";
+// import axios from "axios";
 export class ChooseCity extends React.Component {
   state = {
     docs: [],
   };
-  componentDidMount() {
-    axios.get("https://rehalapp2021.herokuapp.com/cities").then((resp) => {
-      this.setState({ docs: resp.data.docs });
-    });
-  }
+  // componentDidMount() {
+  //   axios.get("https://rehalapp2021.herokuapp.com/cities").then((resp) => {
+  //     this.setState({ docs: resp.data.docs });
+  //   });
+  // }
   render() {
     let { docs } = this.state;
     return (

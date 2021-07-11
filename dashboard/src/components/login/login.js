@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "../layout/layout";
 import { Button } from "../elements/button/button";
 import { useForm } from "react-hook-form";
@@ -7,13 +7,15 @@ import "./login.css";
 import { LoginSchema } from "../../utils/validators/auth";
 import { postRequest } from "../../utils/http";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import {
   getObjFromLocalStorage,
-  setObjToLocalStorage,
 } from "../../utils/localStorage";
 import { BASE_URL, LOGIN } from "../../utils/endpoints";
-export const Login = () => {
-  const [user,] = useState(getObjFromLocalStorage("user"));
+import { connect } from "react-redux";
+import {setUser}  from "../../redux-store/actions/authActions" ; 
+ const Container = ({setUser}) => {
+  const [user] = useState(getObjFromLocalStorage("user"));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
   if (user) history.push("/dashboard");
@@ -25,17 +27,24 @@ export const Login = () => {
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
-  console.log(errors);
+  useEffect(() => {
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
+  }, [errors]);
   const onSubmit = (data) => {
     console.log(data);
     setIsSubmitting(true);
     postRequest(`${BASE_URL}${LOGIN}`, data)
       .then((res) => {
-        setObjToLocalStorage("user", JSON.stringify(res.data));
         reset();
+        setUser(res.data) ; 
+        toast.success("welcome to dashboard");
         history.push("/dashboard");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        toast.error(e.response.data);
+      });
   };
   return (
     <Layout>
@@ -51,23 +60,30 @@ export const Login = () => {
             placeholder='example@mail.com'
             {...register("email")}
           />
-          {errors.email && (
+          {/* {errors.email && (
             <p className='text-danger'>{errors.email.message}</p>
-          )}
+          )} */}
           <input
             className='form-control'
             type='password'
             placeholder='*********'
             {...register("password")}
           />
-          {errors.password && (
+          {/* {errors.password && (
             <p className='text-danger'>{errors.password.message}</p>
-          )}
-          <Button disabled={isSubmitting}>
-            {isSubmitting ? "Loading ..." : "Login"}
+          )} */}
+          <Button isSubmitting={isSubmitting}>
+            {isSubmitting ? "Logging ..." : "Login"}
           </Button>
         </form>
       </div>
     </Layout>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return  { 
+    setUser : payload => dispatch(setUser(payload))
+  }
+}
+
+export const Login  = connect(null, mapDispatchToProps)(Container)

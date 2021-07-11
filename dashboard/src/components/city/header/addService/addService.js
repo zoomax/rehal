@@ -8,6 +8,7 @@ import { getRequest, postRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({ storeCities, storeServices }) => {
   const user = getObjFromLocalStorage("user");
   const [cities, setCities] = useState(storeCities);
@@ -25,7 +26,7 @@ export const Container = ({ storeCities, storeServices }) => {
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setCities(data);
       });
@@ -34,14 +35,17 @@ export const Container = ({ storeCities, storeServices }) => {
   useEffect(() => {
     if (storeServices.length === 0) {
       getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setServices(data);
       });
     }
   }, [storeServices.length]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
   const onSubmit = (data) => {
     console.log(data);
@@ -59,9 +63,11 @@ export const Container = ({ storeCities, storeServices }) => {
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("A new Service has been Added successfully....");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        toast.success(e.response.data);
       });
   };
   return (

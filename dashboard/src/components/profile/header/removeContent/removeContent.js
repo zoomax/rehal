@@ -8,7 +8,8 @@ import { deleteRequest, getRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, CITIES, PLACES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
-export const Container = ({ cityClicked, title, storeCities }) => {
+import { toast } from "react-toastify";
+export const Container = ({ storeCities }) => {
   const user = getObjFromLocalStorage("user");
   const [cities, setCities] = useState(storeCities);
   const [places, setPlaces] = useState([]);
@@ -26,20 +27,23 @@ export const Container = ({ cityClicked, title, storeCities }) => {
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setCities(data);
       });
     }
   }, [storeCities.length]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
   const getPlaces = (id) => {
     getRequest(`${BASE_URL}${PLACES}/cities/${id}`)
       .then((res) => {
-        console.log(res.data.docs);
-        setPlaces(res.data.docs);
+        console.log(res.data);
+        setPlaces(res.data);
       })
       .catch((error) => console.log(error));
   };
@@ -56,9 +60,12 @@ export const Container = ({ cityClicked, title, storeCities }) => {
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("Place has been deleted successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

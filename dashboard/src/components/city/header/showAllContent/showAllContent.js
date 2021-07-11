@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { BASE_URL, CITIES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { setCities } from "../../../../redux-store/actions/citiesActions";
+import { toast } from "react-toastify";
 export const Container = ({ setCities }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
@@ -15,9 +16,14 @@ export const Container = ({ setCities }) => {
         console.log(res.data.docs);
         setCities(res.data.docs);
         setIsSubmitting(false);
+        toast.success("Data has been fetched successfully ");
         history.push("/cities/all");
       })
-      .catch(() => setIsSubmitting(false));
+      .catch((e) => {
+        setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
+      });
   };
   const onSubmit = (e) => {
     e.preventDefault();

@@ -1,12 +1,10 @@
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Router,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { Routes } from "./routes/routes";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
 function App() {
   return (
     <div className='App'>
@@ -35,8 +33,11 @@ function App() {
               return <Redirect path='/dashboard' />;
             }}
           />
+          import {(ToastContainer, toast)} from "react-toastify"; import
+          "react-toastify/dist/ReactToastify.css"; toast.configure();
         </Switch>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

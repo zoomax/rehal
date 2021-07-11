@@ -6,18 +6,24 @@ import { useHistory } from "react-router-dom";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
+import { toast } from "react-toastify";
 export const Container = ({ setServices }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
   const getCities = () => {
     getRequest(`${BASE_URL}${SERVICES}`)
       .then((res) => {
-        console.log(res.data.docs);
-        setServices(res.data.docs);
+        console.log(res.data);
+        setServices(res.data);
         setIsSubmitting(false);
+        toast.success("Service has been updated successfully ");
         history.push("/services/all");
       })
-      .catch(() => setIsSubmitting(false));
+      .catch((e) => {
+        setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
+      });
   };
   const onSubmit = (e) => {
     e.preventDefault();

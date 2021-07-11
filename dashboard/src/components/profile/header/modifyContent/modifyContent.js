@@ -8,6 +8,7 @@ import upload from "../../../../assets/images/upload.png";
 import loader from "../../../../assets/images/loader.gif";
 import { getRequest, putRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
+import { toast } from "react-toastify";
 import {
   BASE_URL,
   CITIES,
@@ -62,7 +63,7 @@ export const Container = ({ cityClicked, title, storeCities }) => {
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setCities(data);
       });
@@ -71,14 +72,16 @@ export const Container = ({ cityClicked, title, storeCities }) => {
   // getting services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setServices(data);
     });
   }, []);
-  // getting errors
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
   // on file change
   const onFileChange = (e) => {
@@ -105,8 +108,8 @@ export const Container = ({ cityClicked, title, storeCities }) => {
     setPlace(null);
     getRequest(`${BASE_URL}${PLACES}/cities/${id}`)
       .then((res) => {
-        console.log(res.data.docs);
-        setPlaces(res.data.docs);
+        console.log(res.data);
+        setPlaces(res.data);
       })
       .catch((error) => console.log(error));
   };
@@ -130,9 +133,12 @@ export const Container = ({ cityClicked, title, storeCities }) => {
         setIsSubmitting(false);
         reset();
         setImage(null);
+        toast.success(" Place has been updated successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
 

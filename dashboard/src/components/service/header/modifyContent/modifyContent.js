@@ -12,10 +12,8 @@ import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
 import { setCities } from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
-export const Container = ({
-  storeServices,  
-  setStoreServices,
-}) => {
+import { toast } from "react-toastify";
+export const Container = ({ storeServices, setStoreServices }) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
   const [services, setServices] = useState(storeServices);
@@ -34,14 +32,17 @@ export const Container = ({
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setServices(data);
       setStoreServices(data);
     });
   }, [setStoreServices]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
 
   const onFileChange = (e) => {
@@ -87,9 +88,12 @@ export const Container = ({
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("Service has been updated successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { BASE_URL, CITIES, PLACES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { setPlaces } from "../../../../redux-store/actions/placesActions";
+import { toast } from "react-toastify";
 export const Container = ({ setPlaces, storeCities }) => {
   const [cities, setCities] = useState(storeCities);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +16,7 @@ export const Container = ({ setPlaces, storeCities }) => {
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         console.log(data);
         setCities(data);
       });
@@ -24,12 +25,17 @@ export const Container = ({ setPlaces, storeCities }) => {
   const getPlaces = (id) => {
     getRequest(`${BASE_URL}${PLACES}/cities/${id}`)
       .then((res) => {
-        console.log(res.data.docs);
-        setPlaces(res.data.docs);
+        console.log(res.data);
+        setPlaces(res.data);
         setIsSubmitting(false);
         history.push("/profile/all");
+        toast.success("Data has been fetched successfully ");
       })
-      .catch(() => setIsSubmitting(false));
+      .catch((e) => {
+        setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
+      });
   };
   const onSubmit = (e) => {
     e.preventDefault();

@@ -18,6 +18,7 @@ import {
 import { setServices } from "../../../../redux-store/actions/servicesActions";
 import { setCities } from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({
   storeCities,
   storeServices,
@@ -41,7 +42,7 @@ export const Container = ({
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         setCities(data);
         setStoreCities(data);
       });
@@ -50,16 +51,18 @@ export const Container = ({
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setServices(data);
       setStoreServices(data);
     });
   }, [setStoreServices]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
-
   const onFileChange = (e) => {
     e.preventDefault();
     setImage(e.target.files[0]);
@@ -98,9 +101,12 @@ export const Container = ({
         console.log(res);
         setIsSubmitting(false);
         reset();
+        toast.success("A new place has been added successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

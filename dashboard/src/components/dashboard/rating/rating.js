@@ -20,7 +20,7 @@ export const Container = () => {
       },
     })
       .then((res) => {
-        const docs = res.data.docs;
+        const docs = res.data;
         console.log(docs);
         // returns empty array whether place is not exist or  place has no ratings yet
         setPlaceRates(docs);
@@ -29,7 +29,7 @@ export const Container = () => {
         console.log(error);
         history.push("/profile/all");
       });
-  }, [id, history]);
+  }, [id, history , user.token]);
   return (
     <div className='rating-border'>
       <Layout>

@@ -6,14 +6,20 @@ export const Total = ({ docs: placeRates }) => {
     const data = placeRates.map((doc) => doc.rating);
     const avg =
       data.length !== 0
-        ? data.reduce((acc = 0, rating) => (acc += rating)) / data.length
+        ? data.reduce((acc = 0, rating) => {
+            if (!rating) {
+              return acc;
+            } else {
+              return (acc += rating);
+            }
+          }) / data.length
         : 0;
     const min = Math.min(data);
     const max = Math.max(data);
 
     const viewData = [
       { names: "Raters", value: `${data.length}` },
-      { names: "Rate Avg", value: `${avg}` },
+      { names: "Rate Avg", value: `${avg ? avg : 0}` },
       { names: "Top rate", value: `${max}` },
       { names: "Lowest rate", value: `${min}` },
     ];

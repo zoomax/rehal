@@ -10,6 +10,7 @@ import { postRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = () => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
@@ -22,8 +23,11 @@ export const Container = () => {
   } = useForm({
     resolver: yupResolver(ServiceSchema),
   });
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
 
   const onFileChange = (e) => {
@@ -55,9 +59,12 @@ export const Container = () => {
         setIsSubmitting(false);
         reset();
         setImage(null);
+        toast.success("A new Service has been added successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

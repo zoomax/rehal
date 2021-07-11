@@ -5,13 +5,13 @@ import "./contact.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactSchema } from "../../../../utils/validators/auth";
-import {
-  getObjFromLocalStorage,
-  setObjToLocalStorage,
-} from "../../../../utils/localStorage";
+import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { putRequest } from "../../../../utils/http";
 import { BASE_URL } from "../../../../utils/endpoints";
-export const Contact = () => {
+import { toast } from "react-toastify";
+import { updateUser } from "../../../../redux-store/actions/authActions";
+import { connect } from "react-redux";
+const Container = ({ updateUser }) => {
   const [user, setUser] = useState(getObjFromLocalStorage("user"));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [image, setImage] = useState(null);
@@ -23,16 +23,20 @@ export const Contact = () => {
   } = useForm({
     resolver: yupResolver(ContactSchema),
   });
-
   useEffect(() => {
-    const keys = ["name", "email", "lat", "lng", "phone"];
+    const keys = ["name", "email", "location", "phone"];
     function fillForm(keys, obj) {
       keys.forEach((key) => {
-        setValue(key, obj[key]);
+        if (key === "location") {
+          setValue("lng", obj[key].coordinates[0]);
+          setValue("lat", obj[key].coordinates[1]);
+        } else {
+          setValue(key, obj[key]);
+        }
       });
     }
     fillForm(keys, user.user);
-  }, []);
+  }, [setValue, user.user]);
   //errors, setValue, user.user
   function onFileChange(e) {
     const file = e.target.files[0];
@@ -64,11 +68,15 @@ export const Contact = () => {
         const data = res.data;
         console.log(data);
         setUser({ ...user, user: data });
-        setObjToLocalStorage("user", JSON.stringify(user));
+        console.log(user);
+        localStorage.removeItem("user");
+        updateUser(data);
+
+        toast.success("Your acount has been updated successfully");
       })
-      .catch((error) => {
+      .catch((e) => {
         setIsSubmitting(false);
-        console.log(error);   
+        toast.error(e.response);
       });
   }
   return (
@@ -207,3 +215,11 @@ export const Contact = () => {
     </div>
   );
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (payload) => dispatch(updateUser(payload)),
+  };
+};
+
+export const Contact = connect(null, mapDispatchToProps)(Container);

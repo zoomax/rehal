@@ -7,6 +7,7 @@ import { PasswordSchema } from "../../../../utils/validators/auth";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { postRequest } from "../../../../utils/http";
 import { BASE_URL } from "../../../../utils/endpoints";
+import { toast } from "react-toastify";
 export const Password = () => {
   const [user] = useState(getObjFromLocalStorage("user"));
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,10 +31,11 @@ export const Password = () => {
         console.log(res.data);
         setIsSubmitting(false);
         reset();
+        toast.success("Your password has been updated successfully");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
         setIsSubmitting(false);
+        toast.error(e.response);
       });
   }
   return (

@@ -8,26 +8,19 @@ import upload from "../../../../assets/images/upload.png";
 import loader from "../../../../assets/images/loader.gif";
 import { getRequest, postRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
-import {
-  BASE_URL,
-  CITIES,
-  SERVICES,
-  NEW_PLACE,
-  PLACES,
-} from "../../../../utils/endpoints";
+import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
 import { setCities } from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({
-  storeCities,
   storeServices,
-  setStoreCities,
+
   setStoreServices,
 }) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
-  // const [cities, setCities] = useState(storeCities);
-  const [services, setServices] = useState(storeServices);
+  const [, setServices] = useState(storeServices);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -37,27 +30,20 @@ export const Container = ({
   } = useForm({
     resolver: yupResolver(CitySchema),
   });
-  // get citiess
-  // useEffect(() => {
-  //   if (storeCities.length === 0) {
-  //     getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-  //       const data = res.data.docs;
-  //       setCities(data);
-  //       setStoreCities(data);
-  //     });
-  //   }
-  // }, [setStoreCities, storeCities.length]);
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setServices(data);
       setStoreServices(data);
     });
   }, [setStoreServices]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
 
   const onFileChange = (e) => {
@@ -90,9 +76,11 @@ export const Container = ({
         setIsSubmitting(false);
         reset();
         setImage(null);
+        toast.success("A new city has been added successfully");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        toast.error(e.response.data);
       });
   };
   return (
@@ -100,7 +88,6 @@ export const Container = ({
       <div className='container'>
         <form className='row' onSubmit={handleSubmit(onSubmit)}>
           <div className='col-md-9 col-9 row'>
-            {/* <div className='col-m-12 row'> */}
             <div className='col-lg-4 col-md-4 col-6'>
               <input
                 type='text'

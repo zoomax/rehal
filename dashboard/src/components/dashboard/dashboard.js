@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { getRequest } from "../../utils/http";
 import { BASE_URL, CITIES, PLACES, SERVICES } from "../../utils/endpoints";
 import { getObjFromLocalStorage } from "../../utils/localStorage";
+import { toast } from "react-toastify";
 export const Container = ({
   storeCities,
   storeServices,
@@ -32,12 +33,16 @@ export const Container = ({
         },
       })
         .then((res) => {
-          const data = res.data.docs;
+          const data = res.data;
           setStoreCities(data);
+          toast.success("Cities has been updated successfully ");
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          // failure
+          toast.error(e.response);
+        });
     }
-  }, []);
+  }, [setStoreCities , storeCities , user.token]);
   // getPlaces
   useEffect(() => {
     const url = `${BASE_URL}${PLACES}cities/${city}`;
@@ -47,12 +52,16 @@ export const Container = ({
       },
     })
       .then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         setPlaces(data);
         console.log("dashboard places", data);
+        toast.success("Places has been fetched successfully ");
       })
-      .catch((error) => console.log(error));
-  }, [city]);
+      .catch((e) => {
+        // failure
+        toast.error(e.response);
+      });
+  }, [city , user.token]);
   // getServices
   useEffect(() => {
     const url = `${BASE_URL}${SERVICES}`;
@@ -63,10 +72,14 @@ export const Container = ({
         },
       })
         .then((res) => {
-          const data = res.data.docs;
+          const data = res.data;
           setStoreServices(data);
+          toast.success("Services has been fetched successfully ");
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          // failure
+          toast.error(e.response);
+        });
     }
   });
 
@@ -86,8 +99,6 @@ export const Container = ({
                 onCityChange(e);
               }}>
               <option value=''>select a City...</option>
-              {/* <option value='all'>All</option> */}
-
               {storeCities.map((city, index) => {
                 return (
                   <option key={index} value={city.id}>
@@ -99,13 +110,11 @@ export const Container = ({
           </div>
           <Header
             openDiv={(id) => openDiv(id)}
-            getTotalReviews={getTotalReviews}
             getTotalRates={getTotalRates}
             places={places}
             services={storeServices}
           />
           <Body
-            getTotalReviews={getTotalReviews}
             getTotalRates={getTotalRates}
             id={id}
             places={places}
@@ -136,7 +145,7 @@ export const Dashboard = connect(
 )(Container);
 
 function getTotalRates(serviceId, places) {
-  const total = [];
+  let total = [];
   let reviews = 0;
   let serviceProviders = places;
   if (serviceId !== "total")
@@ -161,18 +170,4 @@ function getTotalRates(serviceId, places) {
   };
 }
 
-function getTotalReviews(serviceId, places) {
-  const total = [];
-  let serviceProviders = places;
-  if (serviceId !== "total")
-    serviceProviders = places.filter(
-      (place) => place.service.toString() === serviceId.toString(),
-    );
-  serviceProviders.forEach((provider) => {
-    if (provider.reviews) total = [...total, provider.reviews];
-  });
 
-  return total.length !== 0
-    ? total.reduce((acc = 0, review) => (acc += review))
-    : 0;
-}

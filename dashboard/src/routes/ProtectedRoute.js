@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getObjFromLocalStorage } from "../utils/localStorage";
+import { setUser } from "../redux-store/actions/authActions";
 
-export function Container({ component: Component, ...rest }) {
-  const [user, setUser] = useState(
-   getObjFromLocalStorage("user")
-  );
+export function Container({
+  authenticatedUser,
+  setUser,
+  component: Component,
+  ...rest
+}) {
+  const [user] = useState(getObjFromLocalStorage("user"));
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
-  }, []);
- 
+    if (!authenticatedUser.user) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+  }, [authenticatedUser.user, setUser]);
+
   return (
     <Route
       {...rest}
@@ -24,17 +30,17 @@ export function Container({ component: Component, ...rest }) {
     />
   );
 }
-// const mapStateToProps = ({ auth: { user } }) => {
-//   return {
-//     isUser: user,
-//   };
-// };
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     login: (payload) => dispatch(login(payload)),
-//   };
-// };
+const mapStateToProps = ({ auth }) => {
+  return {
+    authenticatedUser: auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (payload) => dispatch(setUser(payload)),
+  };
+};
 export const ProtectedRoute = connect(
-  // mapStateToProps,
-  // mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(Container);

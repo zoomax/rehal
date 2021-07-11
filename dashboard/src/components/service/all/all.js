@@ -4,11 +4,11 @@ import img from "../../../assets/images/x.svg";
 import "./all.css";
 import { connect } from "react-redux";
 const All = ({ services }) => {
-  const getServices = () => {
-    return services.map((service) => {
-      return service.name;
-    });
-  };
+  // const getServices = () => {
+  //   return services.map((service) => {
+  //     return service.name;
+  //   });
+  // };
   return (
     <div className='all-border'>
       <Layout>

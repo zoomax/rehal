@@ -9,7 +9,7 @@ import "./city.css";
 const Container = ({ setCities }) => {
   useEffect(() => {
     getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setCities(data);
     });

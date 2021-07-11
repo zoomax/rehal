@@ -12,6 +12,7 @@ import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
 import { setCities } from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 export const Container = ({
   storeCities,
   storeServices,
@@ -37,7 +38,7 @@ export const Container = ({
   useEffect(() => {
     if (storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
-        const data = res.data.docs;
+        const data = res.data;
         setCities(data);
         setStoreCities(data);
       });
@@ -46,26 +47,30 @@ export const Container = ({
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data.docs;
+      const data = res.data;
       console.log(data);
       setServices(data);
       setStoreServices(data);
     });
   }, [setStoreServices]);
+  // show errors
   useEffect(() => {
-    console.log(errors);
+    Object.keys(errors).forEach((key) => {
+      toast.error(errors[key].message);
+    });
   }, [errors]);
-  useEffect(() => {
-    console.log(city);
-  }, [city]);
+
+  // onCityChanged function
   function onCityChange(e) {
     const data = e.target.value;
     setCityInfo(data);
   }
+  // onImageChange function
   const onFileChange = (e) => {
     e.preventDefault();
     setImage(e.target.files[0]);
   };
+  // setCityInfo function
   const setCityInfo = (id) => {
     const info = cities.find((city) => {
       return city.id === id;
@@ -82,10 +87,11 @@ export const Container = ({
       });
     }
   };
+  // Submitting the form
   const onSubmit = (data) => {
     console.log(data);
     console.log(user);
-    const { postalCode, name } = data;
+    const { name } = data;
     const placeFormData = {
       name,
       services,
@@ -107,9 +113,13 @@ export const Container = ({
         console.log(res);
         setIsSubmitting(false);
         reset();
+        // success
+        toast.success("City has been updated successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
+        // failure
+        toast.error(e.response.data);
       });
   };
   return (

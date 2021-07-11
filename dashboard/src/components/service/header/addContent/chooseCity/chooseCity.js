@@ -8,7 +8,7 @@ export class ChooseCity extends React.Component {
   };
   componentDidMount() {
     axios.get("https://rehalapp2021.herokuapp.com/cities").then((resp) => {
-      this.setState({ docs: resp.data.docs });
+      this.setState({ docs: resp.data });
     });
   }
   render() {
