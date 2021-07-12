@@ -11,7 +11,8 @@ import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-export const Container = () => {
+import { addService } from "../../../../redux-store/actions/servicesActions";
+export const Container = ({ addService }) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,10 +56,11 @@ export const Container = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
         setIsSubmitting(false);
         reset();
         setImage(null);
+        addService(payload);
         toast.success("A new Service has been added successfully ");
       })
       .catch((e) => {
@@ -107,12 +109,16 @@ export const Container = () => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {};
+const mapStateToProps = ({ services }) => {
+  return {
+    storeServices: services,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    addService: (payload) => dispatch(addService(payload)),
+  };
 };
 export const AddContent = connect(
   mapStateToProps,

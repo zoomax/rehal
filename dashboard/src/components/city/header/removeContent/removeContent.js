@@ -9,7 +9,8 @@ import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, CITIES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-export const Container = ({ storeCities }) => {
+import { deleteCity } from "../../../../redux-store/actions/citiesActions";
+export const Container = ({ storeCities, deleteCity }) => {
   const user = getObjFromLocalStorage("user");
   const [cities, setCities] = useState(storeCities);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,14 +24,14 @@ export const Container = ({ storeCities }) => {
   });
   // get citiess
   useEffect(() => {
-    if (storeCities.length === 0) {
+    setCities(storeCities);
+    if (storeCities && storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data;
-        console.log(data);
         setCities(data);
       });
     }
-  }, [storeCities.length]);
+  }, [storeCities]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -38,7 +39,6 @@ export const Container = ({ storeCities }) => {
     });
   }, [errors]);
   const onSubmit = (data) => {
-    console.log(data);
     const { city } = data;
     setIsSubmitting(true);
     deleteRequest(`${BASE_URL}${CITIES}delete/${city}`, {
@@ -47,15 +47,17 @@ export const Container = ({ storeCities }) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
+        console.log(payload);
         setIsSubmitting(false);
         reset();
+        deleteCity(city);
         toast.success("City has been deleted successfully ");
       })
       .catch((e) => {
         setIsSubmitting(false);
         // failure
-        toast.error(e.response.data);
+        toast.error(e.response);
       });
   };
   return (
@@ -98,4 +100,13 @@ const mapStateToProps = ({ cities }) => {
     storeCities: cities,
   };
 };
-export const RemoveContent = connect(mapStateToProps)(Container);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteCity: (payload) => dispatch(deleteCity(payload)),
+  };
+};
+export const RemoveContent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Container);

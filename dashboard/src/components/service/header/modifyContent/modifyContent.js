@@ -9,8 +9,10 @@ import loader from "../../../../assets/images/loader.gif";
 import { getRequest, putRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
-import { setServices } from "../../../../redux-store/actions/servicesActions";
-import { setCities } from "../../../../redux-store/actions/citiesActions";
+import {
+  setServices,
+  updateService,
+} from "../../../../redux-store/actions/servicesActions";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 export const Container = ({ storeServices, setStoreServices }) => {
@@ -31,13 +33,14 @@ export const Container = ({ storeServices, setStoreServices }) => {
 
   // get services
   useEffect(() => {
-    getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data;
-      console.log(data);
-      setServices(data);
-      setStoreServices(data);
-    });
-  }, [setStoreServices]);
+    setServices(storeServices);
+    if (storeServices && storeServices.length === 0) {
+      getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
+        const data = res.data;
+        setStoreServices(data);
+      });
+    }
+  }, [setStoreServices, storeServices]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -85,9 +88,10 @@ export const Container = ({ storeServices, setStoreServices }) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
         setIsSubmitting(false);
         reset();
+        updateService(payload);
         toast.success("Service has been updated successfully ");
       })
       .catch((e) => {
@@ -151,17 +155,16 @@ export const Container = ({ storeServices, setStoreServices }) => {
   );
 };
 
-const mapStateToProps = ({ cities, services }) => {
+const mapStateToProps = ({ services }) => {
   return {
-    storeCities: cities,
     storeServices: services,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setStoreCities: (payload) => dispatch(setCities(payload)),
     setStoreServices: (payload) => dispatch(setServices(payload)),
+    updateService: (payload) => dispatch(updateService(payload)),
   };
 };
 export const ModifyContent = connect(

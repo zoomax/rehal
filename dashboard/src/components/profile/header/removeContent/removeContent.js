@@ -25,14 +25,14 @@ export const Container = ({ storeCities }) => {
   });
   // get citiess
   useEffect(() => {
-    if (storeCities.length === 0) {
+    if (storeCities && storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data;
         console.log(data);
         setCities(data);
       });
     }
-  }, [storeCities.length]);
+  }, [storeCities]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -42,8 +42,8 @@ export const Container = ({ storeCities }) => {
   const getPlaces = (id) => {
     getRequest(`${BASE_URL}${PLACES}/cities/${id}`)
       .then((res) => {
-        console.log(res.data);
-        setPlaces(res.data);
+        const payload = res.data;
+        setPlaces(payload);
       })
       .catch((error) => console.log(error));
   };
@@ -125,9 +125,11 @@ export const Container = ({ storeCities }) => {
   );
 };
 
-const mapStateToProps = ({ cities }) => {
+const mapStateToProps = ({ cities, places }) => {
   return {
     storeCities: cities,
+    storePlaces: places,
   };
 };
+
 export const RemoveContent = connect(mapStateToProps)(Container);

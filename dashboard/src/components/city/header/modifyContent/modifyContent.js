@@ -8,9 +8,12 @@ import upload from "../../../../assets/images/upload.png";
 import loader from "../../../../assets/images/loader.gif";
 import { getRequest, putRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
-import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
+import { BASE_URL, CITIES } from "../../../../utils/endpoints";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
-import { setCities } from "../../../../redux-store/actions/citiesActions";
+import {
+  setCities,
+  updateCity,
+} from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 export const Container = ({
@@ -18,12 +21,12 @@ export const Container = ({
   storeServices,
   setStoreCities,
   setStoreServices,
+  updateCity,
 }) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
   const [cities, setCities] = useState(storeCities);
   const [city, setCity] = useState(null);
-  const [services, setServices] = useState(storeServices);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -36,23 +39,15 @@ export const Container = ({
   });
   // get cities
   useEffect(() => {
-    if (storeCities.length === 0) {
+    setCities(storeCities);
+    if (setStoreCities && storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data;
         setCities(data);
         setStoreCities(data);
       });
     }
-  }, [setStoreCities, storeCities.length]);
-  // get services
-  useEffect(() => {
-    getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
-      const data = res.data;
-      console.log(data);
-      setServices(data);
-      setStoreServices(data);
-    });
-  }, [setStoreServices]);
+  }, [setStoreCities, storeCities]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -89,12 +84,10 @@ export const Container = ({
   };
   // Submitting the form
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(user);
-    const { name } = data;
+    const { name, postalCode } = data;
     const placeFormData = {
       name,
-      services,
+      postalCode,
     };
     setIsSubmitting(true);
     const formData = new FormData();
@@ -110,9 +103,10 @@ export const Container = ({
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
         setIsSubmitting(false);
         reset();
+        updateCity(payload);
         // success
         toast.success("City has been updated successfully ");
       })
@@ -195,6 +189,7 @@ const mapStateToProps = ({ cities, services }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setStoreCities: (payload) => dispatch(setCities(payload)),
+    updateCity: (payload) => dispatch(updateCity(payload)),
     setStoreServices: (payload) => dispatch(setServices(payload)),
   };
 };

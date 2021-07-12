@@ -9,7 +9,8 @@ import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-export const Container = ({ storeCities, storeServices }) => {
+import { updateCity } from "../../../../redux-store/actions/citiesActions";
+export const Container = ({ storeCities, storeServices, updateCity }) => {
   const user = getObjFromLocalStorage("user");
   const [cities, setCities] = useState(storeCities);
   const [services, setServices] = useState(storeServices);
@@ -24,23 +25,23 @@ export const Container = ({ storeCities, storeServices }) => {
   });
   // get citiess
   useEffect(() => {
-    if (storeCities.length === 0) {
+    setCities(storeCities);
+    if (storeCities && storeCities.length === 0) {
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data;
-        console.log(data);
         setCities(data);
       });
     }
-  }, [storeCities.length]);
+  }, [storeCities]);
   useEffect(() => {
-    if (storeServices.length === 0) {
+    setServices(storeServices);
+    if (storeServices && storeServices.length === 0) {
       getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
         const data = res.data;
-        console.log(data);
         setServices(data);
       });
     }
-  }, [storeServices.length]);
+  }, [storeServices]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -48,21 +49,19 @@ export const Container = ({ storeCities, storeServices }) => {
     });
   }, [errors]);
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(user.token);
     const { city, service } = data;
     setIsSubmitting(true);
     const url = `${BASE_URL}${CITIES}${city}/services/${service}`;
-    console.log(url);
     postRequest(url, data, {
       headers: {
         "auth-token": user.token,
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
         setIsSubmitting(false);
         reset();
+        updateCity(payload);
         toast.success("A new Service has been Added successfully....");
       })
       .catch((e) => {
@@ -127,4 +126,12 @@ const mapStateToProps = ({ cities, services }) => {
     storeServices: services,
   };
 };
-export const AddService = connect(mapStateToProps)(Container);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCity: (payload) => dispatch(updateCity(payload)),
+  };
+};
+export const AddService = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Container);

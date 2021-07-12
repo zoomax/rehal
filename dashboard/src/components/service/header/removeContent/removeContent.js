@@ -9,7 +9,8 @@ import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, SERVICES } from "../../../../utils/endpoints";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-export const Container = ({ storeServices }) => {
+import { deleteService } from "../../../../redux-store/actions/servicesActions";
+export const Container = ({ storeServices, deleteService }) => {
   const user = getObjFromLocalStorage("user");
   const [services, setServices] = useState(storeServices);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,14 +24,14 @@ export const Container = ({ storeServices }) => {
   });
   // get services
   useEffect(() => {
-    if (storeServices.length === 0) {
+    setServices(storeServices);
+    if (storeServices && storeServices.length === 0) {
       getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
         const data = res.data;
-        console.log(data);
         setServices(data);
       });
     }
-  }, [storeServices.length]);
+  }, [storeServices]);
   // show errors
   useEffect(() => {
     Object.keys(errors).forEach((key) => {
@@ -51,6 +52,7 @@ export const Container = ({ storeServices }) => {
         console.log(res);
         setIsSubmitting(false);
         reset();
+        deleteService(name);
         toast.success("Service has been deleted successfully ");
       })
       .catch((e) => {
@@ -99,4 +101,12 @@ const mapStateToProps = ({ services }) => {
     storeServices: services,
   };
 };
-export const RemoveContent = connect(mapStateToProps)(Container);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteService: (payload) => dispatch(deleteService(payload)),
+  };
+};
+export const RemoveContent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Container);

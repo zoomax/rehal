@@ -40,19 +40,20 @@ export const Container = ({
   });
   // get citiess
   useEffect(() => {
-    if (storeCities.length === 0) {
+    if (storeCities && storeCities.length === 0) {
+      setCities(storeCities);
       getRequest(`${BASE_URL}${CITIES}`).then((res) => {
         const data = res.data;
         setCities(data);
         setStoreCities(data);
       });
     }
-  }, [setStoreCities, storeCities.length]);
+  }, [setStoreCities, storeCities]);
   // get services
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
       const data = res.data;
-      console.log(data);
+
       setServices(data);
       setStoreServices(data);
     });
@@ -68,8 +69,6 @@ export const Container = ({
     setImage(e.target.files[0]);
   };
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(user);
     const { lat, lng, name, address, service, city, rating } = data;
     const placeFormData = {
       name,
@@ -98,9 +97,10 @@ export const Container = ({
       },
     )
       .then((res) => {
-        console.log(res);
+       
         setIsSubmitting(false);
         reset();
+        
         toast.success("A new place has been added successfully ");
       })
       .catch((e) => {

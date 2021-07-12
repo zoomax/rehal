@@ -10,14 +10,13 @@ import { getRequest, postRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
 import { BASE_URL, CITIES, SERVICES } from "../../../../utils/endpoints";
 import { setServices } from "../../../../redux-store/actions/servicesActions";
-import { setCities } from "../../../../redux-store/actions/citiesActions";
+import {
+  setCities,
+  addCity,
+} from "../../../../redux-store/actions/citiesActions";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-export const Container = ({
-  storeServices,
-
-  setStoreServices,
-}) => {
+export const Container = ({ storeServices, addCity, setStoreServices }) => {
   const user = getObjFromLocalStorage("user");
   const [image, setImage] = useState(null);
   const [, setServices] = useState(storeServices);
@@ -34,7 +33,6 @@ export const Container = ({
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
       const data = res.data;
-      console.log(data);
       setServices(data);
       setStoreServices(data);
     });
@@ -72,10 +70,11 @@ export const Container = ({
       },
     })
       .then((res) => {
-        console.log(res);
+        const payload = res.data;
         setIsSubmitting(false);
         reset();
         setImage(null);
+        addCity(payload);
         toast.success("A new city has been added successfully");
       })
       .catch((e) => {
@@ -142,6 +141,7 @@ const mapStateToProps = ({ cities, services }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setStoreCities: (payload) => dispatch(setCities(payload)),
+    addCity: (payload) => dispatch(addCity(payload)),
     setStoreServices: (payload) => dispatch(setServices(payload)),
   };
 };
