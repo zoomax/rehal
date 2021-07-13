@@ -17,8 +17,9 @@
     background: #ffffff 0% 0% no-repeat padding-box;
     box-shadow: 0px 1px 6px #00000080;
     border-radius: 10px;
-    width: 192px;
+    width: 290px;
     padding: 0 14px;
+    margin-top: 15px;
 }
 
 .places .select-type p {
@@ -27,11 +28,12 @@
     color: #2699fb;
     margin-bottom: 0;
     margin-right: 10px;
+    min-width: 50px;
 }
 
 .places .select-type select {
     border: 0;
-    width: 120px;
+    width: 190px;
 }
 
 .places .select-type option {
