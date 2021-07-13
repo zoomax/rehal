@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "../layout/layout";
 import "./dashboard.css";
 import Header from "./header/header";
@@ -17,6 +17,14 @@ export const Container = ({
   setStoreServices,
 }) => {
   const user = getObjFromLocalStorage("user");
+
+  const options = useMemo(() => {
+    return {
+      headers: {
+        "auth-token": user.token,
+      },
+    };
+  }, [user.token]);
   const [places, setPlaces] = useState([]);
   const [city, setCity] = useState("");
   const [id, setId] = useState("total");
@@ -27,11 +35,7 @@ export const Container = ({
   useEffect(() => {
     const url = `${BASE_URL}${CITIES}`;
     if (storeCities.length === 0) {
-      getRequest(url, {
-        headers: {
-          "auth-token": user.token,
-        },
-      })
+      getRequest(url, options)
         .then((res) => {
           const data = res.data;
           setStoreCities(data);
@@ -42,15 +46,11 @@ export const Container = ({
           toast.error(e.response);
         });
     }
-  }, [setStoreCities , storeCities , user.token]);
+  }, [setStoreCities, storeCities, options]);
   // getPlaces
   useEffect(() => {
     const url = `${BASE_URL}${PLACES}cities/${city}`;
-    getRequest(url, {
-      headers: {
-        "auth-token": user.token,
-      },
-    })
+    getRequest(url, options)
       .then((res) => {
         const data = res.data;
         setPlaces(data);
@@ -61,16 +61,12 @@ export const Container = ({
         // failure
         toast.error(e.response);
       });
-  }, [city , user.token]);
+  }, [city, options]);
   // getServices
   useEffect(() => {
     const url = `${BASE_URL}${SERVICES}`;
-    if (storeServices.length === 0) {
-      getRequest(url, {
-        headers: {
-          "auth-token": user.token,
-        },
-      })
+    if (storeServices && storeServices.length === 0) {
+      getRequest(url, options)
         .then((res) => {
           const data = res.data;
           setStoreServices(data);
@@ -81,12 +77,15 @@ export const Container = ({
           toast.error(e.response);
         });
     }
-  });
+  }, [options, storeServices, setStoreServices]);
 
   const onCityChange = (e) => {
     const value = e.target.value;
     setCity(value);
   };
+  // get all info
+  //comments , rates ,places as objects , notificatiob
+
   return (
     <div className='dashboard-border'>
       <Layout>
@@ -153,21 +152,42 @@ function getTotalRates(serviceId, places) {
       (place) => place.service.toString() === serviceId.toString(),
     );
   serviceProviders.forEach((provider) => {
-    if (provider.allRates) total = [...total, provider.allRates];
+    if (provider.allRates) total = [...total, ...provider.allRates];
     if (provider.reviews) reviews += provider.reviews;
   });
+  const allRates = total.map((rate) => (rate.rating ? rate.rating : 0));
   return {
     totalRates: total.length,
-    maxRate:
-      total.length !== 0 ? Math.max(total.map((rate) => rate.rating)) : 0,
-    minRate:
-      total.length !== 0 ? Math.min(total.map((rate) => rate.rating)) : 0,
+    maxRate: total.length !== 0 ? Math.max(...allRates) : 0,
+    minRate: total.length !== 0 ? Math.min(...allRates) : 0,
     avgRate:
       total.length !== 0
-        ? total.reduce((acc = 0, rate) => (acc += rate.rating)) / total.length
+        ? allRates.reduce((acc = 0, rate) => (acc += rate)) / allRates.length
         : 0,
     reviews,
   };
 }
-
-
+export function getAllNotifications(options) {
+  const url = `${BASE_URL}notifications/All`;
+  getRequest(url, options)
+    .then((res) => console.log(res.data))
+    .catch((e) => console.log(e));
+}
+export function getAllComments(options) {
+  const url = `${BASE_URL}comments/All`;
+  getRequest(url, options)
+    .then((res) => console.log(res.data))
+    .catch((e) => console.log(e));
+}
+export function getAllRates(options) {
+  const url = `${BASE_URL}rates/All`;
+  getRequest(url, options)
+    .then((res) => console.log(res.data))
+    .catch((e) => console.log(e));
+}
+export function getAllPlaces(options) {
+  const url = `${BASE_URL}places/All`;
+  getRequest(url, options)
+    .then((res) => console.log(res.data))
+    .catch((e) => console.log(e));
+}

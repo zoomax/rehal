@@ -36,8 +36,6 @@ export const Container = ({ addService }) => {
     setImage(e.target.files[0]);
   };
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(user);
     const { name } = data;
     const serviceFormData = {
       name,
@@ -66,7 +64,7 @@ export const Container = ({ addService }) => {
       .catch((e) => {
         setIsSubmitting(false);
         // failure
-        toast.error(e.response.data);
+        toast.error(e.response);
       });
   };
   return (

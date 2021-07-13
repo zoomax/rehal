@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../elements/button/button";
-import { Header } from "../../../profile/header/header";
+// import { Header } from "../../../profile/header/header";
 import { withRouter } from "react-router";
 import "./totalData.css";
 class TotalData extends React.Component {
@@ -13,8 +13,8 @@ class TotalData extends React.Component {
   };
   edit = () => {
     this.props.history.push("/profile");
-    var x = document.getElementById("modify");
-    x.classList.add("accordion-expanded");
+    // var x = document.getElementById("modify");
+    // x.classList.add("accordion-expanded");
   };
   render() {
     let { data } = this.state;
@@ -41,7 +41,7 @@ class TotalData extends React.Component {
             </Button>
           </div>
         </div>
-        <Header />
+        {/* <Header />s */}
       </div>
     );
   }

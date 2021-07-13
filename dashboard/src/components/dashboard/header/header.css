@@ -59,8 +59,8 @@
     justify-content: space-between;
 }
 
-.dashboard-header .data.tourist:hover {
-    background: #a9b1f6 0% 0% no-repeat padding-box;
+.dashboard-header .data:hover {
+    background: #2f4f4f 0% 0% no-repeat padding-box;
     box-shadow: 2px 3px 5px #00000080;
     border-radius: 30px;
     color: #f0f0f0;
@@ -68,6 +68,31 @@
     cursor: pointer;
 }
 
+.dashboard-header .data:hover svg,
+.dashboard-header .data:hover h2,
+.dashboard-header .data:hover p {
+    stroke: #f0f0f0 !important;
+    color: #f0f0f0;
+}
+
+.dashboard-header .data:hover p svg,
+.dashboard-header .data:hover p svg .b {
+    stroke: none !important;
+    fill: #f0f0f0;
+}
+
+.dashboard-header .found .b {
+    stroke: none !important;
+    fill: none !important;
+}
+
+.dashboard-header .data:hover .found .c {
+    stroke: #f0f0f0;
+    fill: #f0f0f0;
+}
+
+
+/* 
 .dashboard-header .data.tourist:hover svg,
 .dashboard-header .data.tourist:hover h2,
 .dashboard-header .data.tourist:hover p {
@@ -94,6 +119,8 @@
 
 /****************food*************************/
 
+
+/* 
 .dashboard-header .data.food:hover {
     background: #ff00b2 0% 0% no-repeat padding-box;
     box-shadow: 2px 3px 5px #00000080;
@@ -132,12 +159,13 @@
 .dashboard-header .data.food:hover .found .c {
     stroke: #f0f0f0;
     fill: #f0f0f0;
-}
+} */
 
 
 /****************hospital*************************/
 
-.dashboard-header .data.hospital:hover {
+
+/* .dashboard-header .data.hospital:hover {
     background: #ec8181 0% 0% no-repeat padding-box;
     box-shadow: 2px 3px 5px #00000080;
     border-radius: 30px;
@@ -175,12 +203,13 @@
 .dashboard-header .data.hospital:hover .found .c {
     stroke: #f0f0f0;
     fill: #f0f0f0;
-}
+} */
 
 
 /****************clubs*************************/
 
-.dashboard-header .data.clubs:hover {
+
+/* .dashboard-header .data.clubs:hover {
     background: #00ff00 0% 0% no-repeat padding-box;
     box-shadow: 2px 3px 5px #00000080;
     border-radius: 30px;
@@ -218,7 +247,7 @@
 .dashboard-header .data.clubs:hover .found .c {
     stroke: #f0f0f0;
     fill: #f0f0f0;
-}
+} */
 
 @media (max-width: 992px) {
     .dashboard-header .container {

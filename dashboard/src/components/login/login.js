@@ -8,13 +8,11 @@ import { LoginSchema } from "../../utils/validators/auth";
 import { postRequest } from "../../utils/http";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
-import {
-  getObjFromLocalStorage,
-} from "../../utils/localStorage";
+import { getObjFromLocalStorage } from "../../utils/localStorage";
 import { BASE_URL, LOGIN } from "../../utils/endpoints";
 import { connect } from "react-redux";
-import {setUser}  from "../../redux-store/actions/authActions" ; 
- const Container = ({setUser}) => {
+import { setUser } from "../../redux-store/actions/authActions";
+const Container = ({ setUser }) => {
   const [user] = useState(getObjFromLocalStorage("user"));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
@@ -38,11 +36,13 @@ import {setUser}  from "../../redux-store/actions/authActions" ;
     postRequest(`${BASE_URL}${LOGIN}`, data)
       .then((res) => {
         reset();
-        setUser(res.data) ; 
+        setUser(res.data);
+        setIsSubmitting(false);
         toast.success("welcome to dashboard");
         history.push("/dashboard");
       })
       .catch((e) => {
+        setIsSubmitting(false);
         toast.error(e.response.data);
       });
   };
@@ -81,9 +81,9 @@ import {setUser}  from "../../redux-store/actions/authActions" ;
   );
 };
 const mapDispatchToProps = (dispatch) => {
-  return  { 
-    setUser : payload => dispatch(setUser(payload))
-  }
-}
+  return {
+    setUser: (payload) => dispatch(setUser(payload)),
+  };
+};
 
-export const Login  = connect(null, mapDispatchToProps)(Container)
+export const Login = connect(null, mapDispatchToProps)(Container);

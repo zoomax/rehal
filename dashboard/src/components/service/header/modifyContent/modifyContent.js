@@ -97,7 +97,7 @@ export const Container = ({ storeServices, setStoreServices }) => {
       .catch((e) => {
         setIsSubmitting(false);
         // failure
-        toast.error(e.response.data);
+        toast.error(e.response);
       });
   };
   return (
