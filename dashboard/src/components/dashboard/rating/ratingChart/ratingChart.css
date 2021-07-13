@@ -1,0 +1,9 @@
+.rating-chart {
+  width: 65%;
+  margin: 70px auto;
+}
+@media (max-width: 768px) {
+  .rating-chart {
+    width: 100%;
+  }
+}

@@ -1,0 +1,9 @@
+.city-border a[href="/cities"] {
+    background: #2f4f4f 0% 0% no-repeat padding-box;
+    letter-spacing: 0.15px;
+    color: #f0f0f0;
+}
+
+.city-border .city {
+    margin: 65px 25px 0;
+}

@@ -1,0 +1,88 @@
+.setting-border a[href="/setting"] {
+  background: #2f4f4f 0% 0% no-repeat padding-box;
+  letter-spacing: 0.15px;
+  color: #f0f0f0;
+}
+.setting-border .setting {
+  margin: 65px 25px 0;
+}
+.setting-border .setting {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 10px;
+  padding: 15px 21px;
+}
+.setting-border .setting .btns {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 10px;
+  width: 100%;
+  padding: 13px 40px;
+  font: normal normal normal 21px/31px Century Gothic;
+  letter-spacing: 1.25px;
+  color: #2f4f4f;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.setting-border .setting .fa-chevron-down {
+  float: right;
+  line-height: 31px;
+  font-weight: normal;
+  transform: rotate(0deg);
+  transition: all 0.3s linear;
+}
+.setting-border .setting .content {
+  max-height: 0;
+  transition: max-height 0.4s ease-out;
+  overflow: hidden;
+}
+.setting .accordion-expanded .btns {
+  font-weight: bold;
+}
+.setting .accordion-expanded .fa-chevron-down {
+  transform: rotate(-180deg);
+  transition: all 0.3s linear;
+}
+.setting .accordion-expanded > .content {
+  overflow: hidden;
+  max-height: 700px;
+  transition: max-height 0.4s ease-in;
+}
+.setting .all-settings {
+  margin-bottom: 10px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 2px 4px 6px #00000033;
+  border-radius: 15px;
+}
+.setting .content .contact {
+  padding: 55px 100px;
+}
+@media (max-width: 428px) {
+  .setting-border .setting .btns {
+    font: normal normal normal 18px/31px Century Gothic;
+  }
+  .setting .accordion-expanded .btns {
+    font-weight: bold !important;
+  }
+  .setting-border .setting .fa-chevron-down {
+    font-size: 14px;
+  }
+  .setting-border .setting .btns {
+    padding: 13px 18px;
+  }
+}
+@media (max-width: 320px) {
+  .setting-border .setting .btns {
+    font: normal normal normal 15px/31px Century Gothic;
+  }
+  .setting .accordion-expanded .btns {
+    font-weight: bold !important;
+  }
+  .setting-border .setting .fa-chevron-down {
+    font-size: 12px;
+  }
+  .setting-border .setting .btns {
+    padding: 13px 15px;
+  }
+}

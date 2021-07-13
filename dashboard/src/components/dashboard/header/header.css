@@ -1,0 +1,248 @@
+.dashboard-header .data {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 2px 3px 5px #0000001a;
+    border-radius: 30px;
+    padding: 15px 40px 0;
+    margin-bottom: 15px;
+}
+
+.dashboard-header .row,
+.dashboard-header .container {
+    /* width: 100%; */
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-header .container .col-md-3 {
+    margin: 0;
+    padding: 0;
+    padding-right: 13px;
+}
+
+.dashboard-header .data img {
+    width: 40px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.dashboard-header .data svg {
+    width: 30px;
+    stroke: #2f4f4f;
+    height: 33px;
+    margin-bottom: 12px;
+}
+
+.dashboard-header .data h2 {
+    font: normal normal bold 20px/24px Century Gothic;
+    letter-spacing: 0.2px;
+    color: #2f4f4f;
+    margin-bottom: 17px;
+    text-transform: capitalize;
+}
+
+.dashboard-header .data p {
+    font: normal normal normal 16px/23px Arial;
+    letter-spacing: 0.2px;
+    color: #2f4f4f;
+}
+
+.dashboard-header .data p svg {
+    width: 25px;
+    height: 23px;
+    margin-bottom: 3px;
+    margin-left: 4px;
+    stroke: none;
+}
+
+.dashboard-header .row .row {
+    justify-content: space-between;
+}
+
+.dashboard-header .data.tourist:hover {
+    background: #a9b1f6 0% 0% no-repeat padding-box;
+    box-shadow: 2px 3px 5px #00000080;
+    border-radius: 30px;
+    color: #f0f0f0;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.dashboard-header .data.tourist:hover svg,
+.dashboard-header .data.tourist:hover h2,
+.dashboard-header .data.tourist:hover p {
+    stroke: #f0f0f0 !important;
+    color: #f0f0f0;
+}
+
+.dashboard-header .data.tourist:hover p svg,
+.dashboard-header .data.tourist:hover p svg .b {
+    stroke: none !important;
+    fill: #f0f0f0;
+}
+
+.dashboard-header .found .b {
+    stroke: none !important;
+    fill: none !important;
+}
+
+.dashboard-header .data.tourist:hover .found .c {
+    stroke: #f0f0f0;
+    fill: #f0f0f0;
+}
+
+
+/****************food*************************/
+
+.dashboard-header .data.food:hover {
+    background: #ff00b2 0% 0% no-repeat padding-box;
+    box-shadow: 2px 3px 5px #00000080;
+    border-radius: 30px;
+    color: #f0f0f0;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.dashboard-header .data.food:hover svg,
+.dashboard-header .data.food:hover h2,
+.dashboard-header .data.food:hover p {
+    stroke: #f0f0f0 !important;
+    color: #f0f0f0;
+}
+
+.dashboard-header .data.food:hover p svg,
+.dashboard-header .data.food:hover p svg .b {
+    stroke: none !important;
+    fill: #f0f0f0;
+}
+
+.dashboard-header .data.food p svg .food-icon {
+    stroke: #2f4f4f;
+}
+
+.dashboard-header .data.food:hover p svg .food-icon {
+    stroke: #f0f0f0 !important;
+}
+
+.dashboard-header .found .b {
+    stroke: none !important;
+    fill: none !important;
+}
+
+.dashboard-header .data.food:hover .found .c {
+    stroke: #f0f0f0;
+    fill: #f0f0f0;
+}
+
+
+/****************hospital*************************/
+
+.dashboard-header .data.hospital:hover {
+    background: #ec8181 0% 0% no-repeat padding-box;
+    box-shadow: 2px 3px 5px #00000080;
+    border-radius: 30px;
+    color: #f0f0f0;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.dashboard-header .data.hospital:hover svg,
+.dashboard-header .data.hospital:hover h2,
+.dashboard-header .data.hospital:hover p {
+    stroke: #f0f0f0 !important;
+    color: #f0f0f0;
+}
+
+.dashboard-header .data.hospital:hover p svg,
+.dashboard-header .data.hospital:hover p svg .b {
+    stroke: none !important;
+    fill: #f0f0f0;
+}
+
+.dashboard-header .data.hospital p svg .hospital-icon {
+    stroke: #2f4f4f;
+}
+
+.dashboard-header .data.hospital:hover p svg .hospital-icon {
+    stroke: #f0f0f0 !important;
+}
+
+.dashboard-header .found .b {
+    stroke: none !important;
+    fill: none !important;
+}
+
+.dashboard-header .data.hospital:hover .found .c {
+    stroke: #f0f0f0;
+    fill: #f0f0f0;
+}
+
+
+/****************clubs*************************/
+
+.dashboard-header .data.clubs:hover {
+    background: #00ff00 0% 0% no-repeat padding-box;
+    box-shadow: 2px 3px 5px #00000080;
+    border-radius: 30px;
+    color: #f0f0f0;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.dashboard-header .data.clubs:hover svg,
+.dashboard-header .data.clubs:hover h2,
+.dashboard-header .data.clubs:hover p {
+    stroke: #f0f0f0 !important;
+    color: #f0f0f0;
+}
+
+.dashboard-header .data.clubs:hover p svg,
+.dashboard-header .data.clubs:hover p svg .b {
+    stroke: none !important;
+    fill: #f0f0f0;
+}
+
+.dashboard-header .data.clubs p svg .clubs-icon {
+    stroke: #2f4f4f;
+}
+
+.dashboard-header .data.clubs:hover p svg .clubs-icon {
+    stroke: #f0f0f0 !important;
+}
+
+.dashboard-header .found .b {
+    stroke: none !important;
+    fill: none !important;
+}
+
+.dashboard-header .data.clubs:hover .found .c {
+    stroke: #f0f0f0;
+    fill: #f0f0f0;
+}
+
+@media (max-width: 992px) {
+    .dashboard-header .container {
+        max-width: 100%;
+    }
+    .dashboard-header .data {
+        padding: 15px 25px 0;
+    }
+}
+
+@media (max-width: 1106px) {
+    .dashboard-header .row .row {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 575px) {
+    .dashboard-header .row .col-6 {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 575px) {
+    .dashboard-header .data {
+        padding: 15px 9px 0;
+    }
+}

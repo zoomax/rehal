@@ -1,0 +1,9 @@
+.tourist-chart {
+  width: 70%;
+  margin: 40px auto;
+}
+@media (max-width: 428px) {
+  .tourist-chart {
+    width: 100%;
+  }
+}

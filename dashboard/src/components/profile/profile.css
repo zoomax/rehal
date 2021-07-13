@@ -1,0 +1,8 @@
+.profile-border a[href="/profile"] {
+  background: #2f4f4f 0% 0% no-repeat padding-box;
+  letter-spacing: 0.15px;
+  color: #f0f0f0;
+}
+.profile-border .profile {
+  margin: 65px 25px 0;
+}

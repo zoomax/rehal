@@ -1,0 +1,66 @@
+.service-header .btns {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 2px 4px 6px #00000033;
+    border-radius: 10px;
+    width: 100%;
+    padding: 13px 40px;
+    font: normal normal normal 22px/31px Century Gothic;
+    letter-spacing: 1.25px;
+    color: #2f4f4f;
+    cursor: pointer;
+    /* margin-bottom: 15px; */
+}
+
+.service-header div .fa {
+    float: right;
+    line-height: 31px;
+    font-weight: normal;
+    transform: rotate(0deg);
+    transition: all 0.3s linear;
+}
+
+.service-header .all {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 2px 4px 6px #00000033;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#opend {
+    display: block;
+}
+
+#closed {
+    display: none;
+}
+
+.all>.content {
+    max-height: 0;
+    transition: max-height 0.4s ease-out;
+    overflow: hidden;
+}
+
+.all.accordion-expanded>.content {
+    overflow: hidden;
+    max-height: 700px;
+    transition: max-height 0.4s ease-in;
+}
+
+.all.accordion-expanded .fa {
+    transform: rotate(-180deg);
+    transition: all 0.3s linear;
+}
+
+@keyframes show {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 700px;
+    }
+}
+
+.all.accordion-expanded .btns {
+    font-weight: bold;
+}
