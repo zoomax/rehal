@@ -53,7 +53,6 @@ export const Container = ({
   useEffect(() => {
     getRequest(`${BASE_URL}${SERVICES}`).then((res) => {
       const data = res.data;
-
       setServices(data);
       setStoreServices(data);
     });
