@@ -12,10 +12,10 @@ export function Container({
 }) {
   const [user] = useState(getObjFromLocalStorage("user"));
   useEffect(() => {
-    if (!authenticatedUser.user) {
+    if (!authenticatedUser.user && user) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
-  }, [authenticatedUser.user, setUser]);
+  }, [authenticatedUser.user, setUser, user]);
 
   return (
     <Route

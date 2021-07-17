@@ -5,16 +5,15 @@ import { removeUser, setUser } from "../../../redux-store/actions/authActions";
 import { getObjFromLocalStorage } from "../../../utils/localStorage";
 import "./topNav.css";
 const Container = (props) => {
-  const [user , setUser] = useState(
-    getObjFromLocalStorage("user"),
-  );
+  const [user, setUser] = useState(getObjFromLocalStorage("user"));
+  console.log(user);
   const history = useHistory();
   const logout = () => {
     props.removeUser();
     history.push("/");
   };
   useEffect(() => {
-   setUser(props.authenticatedUser) ; 
+    setUser(props.authenticatedUser);
   }, [props.setUser, props]);
   return (
     <div className='top-nav'>
@@ -32,7 +31,7 @@ const Container = (props) => {
             />
           </div>
         )}
-        {user ? (
+        {user.user ? (
           <div className='dropdown'>
             <span>
               <img
