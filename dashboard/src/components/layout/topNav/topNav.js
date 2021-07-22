@@ -31,7 +31,7 @@ const Container = (props) => {
             />
           </div>
         )}
-        {user.user ? (
+        {user && user.user ? (
           <div className='dropdown'>
             <span>
               <img
