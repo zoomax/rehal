@@ -13,8 +13,8 @@ export const Container = ({ setCities }) => {
   const getCities = () => {
     getRequest(`${BASE_URL}${CITIES}`)
       .then((res) => {
-        console.log(res.data.docs);
-        setCities(res.data.docs);
+        console.log(res.data);
+        setCities(res.data);
         setIsSubmitting(false);
         toast.success("Data has been fetched successfully ");
         history.push("/cities/all");
