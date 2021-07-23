@@ -20,17 +20,7 @@ const Container = (props) => {
       <div className='d-flex flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white fixed-top box-shadow nav-section'>
         <i className='fa fa-bars' onClick={props.openSidebar}></i>
         <h5 className='my-0   font-weight-normal'>Profile</h5>
-        {user && (
-          <div className='input-group'>
-            <input
-              type='text'
-              className='form-control'
-              placeholder='Username'
-              aria-label='Username'
-              aria-describedby='basic-addon1'
-            />
-          </div>
-        )}
+        <div className='input-group'></div>
         {user && user.user ? (
           <div className='dropdown'>
             <span>

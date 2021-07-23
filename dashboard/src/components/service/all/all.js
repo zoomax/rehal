@@ -33,7 +33,6 @@ const All = ({ services }) => {
                       <div className='data-content'>
                         <div className='row1'>
                           <h5>{service.name}</h5>
-                          <img src={img} alt='im' />
                         </div>
                       </div>
                     </div>

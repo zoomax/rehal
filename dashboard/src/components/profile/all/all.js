@@ -49,7 +49,7 @@ const All = ({ places, services, cities }) => {
                       <div className='data-content'>
                         <div className='row1'>
                           <h5>{place.name}</h5>
-                          <img src={img} alt='im' />
+                          
                         </div>
                         <div className='row2'>
                           <p>{getCity(place.city)}</p>

@@ -48,36 +48,42 @@ const Container = ({ updateUser }) => {
   }
 
   function onSubmit(data) {
-    // setIsSubmitting(true);
-    const formData = new FormData();
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
-    if (image) {
-      formData.append("image", image);
-    }
-    console.log(data);
-    setIsSubmitting(true);
-    putRequest(`${BASE_URL}users/edit`, formData, {
-      headers: {
-        "auth-token": user.token,
-      },
-    })
-      .then((res) => {
-        setIsSubmitting(false);
-        const data = res.data;
-        console.log(data);
-        setUser({ ...user, user: data });
-        console.log(user);
-        localStorage.removeItem("user");
-        updateUser(data);
-
-        toast.success("Your acount has been updated successfully");
-      })
-      .catch((e) => {
-        setIsSubmitting(false);
-        toast.error(e.response);
+    const coords = {
+      lng: null,
+      lat: null,
+    };
+    navigator.geolocation.getCurrentPosition((position) => {
+      coords.lat = position.coords.latitude;
+      coords.lng = position.coords.longitude;
+      const formData = new FormData();
+      data.lng = coords.lng;
+      data.lat = coords.lat;
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
       });
+      if (image) {
+        formData.append("image", image);
+      }
+
+      setIsSubmitting(true);
+      putRequest(`${BASE_URL}users/edit`, formData, {
+        headers: {
+          "auth-token": user.token,
+        },
+      })
+        .then((res) => {
+          setIsSubmitting(false);
+          const data = res.data;
+          setUser({ ...user, user: data });
+          localStorage.removeItem("user");
+          updateUser(data);
+          toast.success("Your acount has been updated successfully");
+        })
+        .catch((e) => {
+          setIsSubmitting(false);
+          toast.error(e.response);
+        });
+    });
   }
   return (
     <div className='contact'>
@@ -122,24 +128,6 @@ const Container = ({ updateUser }) => {
                     )}
                   </div>
                 </div>
-
-                <div className='col-12 row'>
-                  <i className='fa fa-picture-o'></i>
-                  <div className='form-group'>
-                    <div className='row'>
-                      <label>Profile Image</label>
-                      <i className='fa fa-pencil'></i>
-                    </div>
-                    <input
-                      type='file'
-                      className='form-control'
-                      accept='image/*'
-                      onChange={(e) => {
-                        onFileChange(e);
-                      }}
-                    />
-                  </div>
-                </div>
               </div>
               {/* *************************************************************** */}
               <div className='col-md-6 col-12'>
@@ -161,40 +149,22 @@ const Container = ({ updateUser }) => {
                     )}
                   </div>
                 </div>
+
                 <div className='col-12 row'>
-                  <i className='fa fa-map-marker'></i>
+                  <i className='fa fa-picture-o'></i>
                   <div className='form-group'>
                     <div className='row'>
-                      <label>Langitude</label>
+                      <label>Profile Image</label>
                       <i className='fa fa-pencil'></i>
                     </div>
                     <input
-                      type='text'
+                      type='file'
                       className='form-control'
-                      placeholder='00.0000000'
-                      {...register("lng")}
+                      accept='image/*'
+                      onChange={(e) => {
+                        onFileChange(e);
+                      }}
                     />
-                    {errors.lng && (
-                      <p className='text-danger'>{errors.lng.message}</p>
-                    )}
-                  </div>
-                </div>
-                <div className='col-12 row'>
-                  <i className='fa fa-map-marker'></i>
-                  <div className='form-group'>
-                    <div className='row'>
-                      <label>Latitude</label>
-                      <i className='fa fa-pencil'></i>
-                    </div>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='00.0000000'
-                      {...register("lat")}
-                    />
-                    {errors.lat && (
-                      <p className='text-danger'>{errors.lat.message}</p>
-                    )}
                   </div>
                 </div>
               </div>

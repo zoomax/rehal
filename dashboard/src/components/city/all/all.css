@@ -55,10 +55,12 @@
 }
 
 .alls .all-data .img img {
-    width: 45px;
-    height: 45px;
-    margin: 4px auto;
+    width: 59px !important;
+    height: 59px !important;
+    border-radius: 50%;
     display: block;
+    padding: 2px;
+    margin: 0px auto !important;
 }
 
 .alls .row1,

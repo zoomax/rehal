@@ -30,7 +30,6 @@ const All = ({ cities, services }) => {
                       <div className='data-content'>
                         <div className='row1'>
                           <h5>{city.name}</h5>
-                          <img src={img} alt='im' />
                         </div>
                         <div className='row2'>
                           <p>Postal Code: {city.postalCode}</p>
