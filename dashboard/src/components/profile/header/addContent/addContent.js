@@ -4,7 +4,6 @@ import "./addContent.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PlaceSchema } from "../../../../utils/validators/auth";
-import upload from "../../../../assets/images/upload.png";
 import loader from "../../../../assets/images/loader.gif";
 import { getRequest, postRequest } from "../../../../utils/http";
 import { getObjFromLocalStorage } from "../../../../utils/localStorage";
@@ -74,7 +73,6 @@ export const Container = ({
       address,
       service,
       city,
-      rating,
       lng,
       lat,
     };
@@ -96,10 +94,9 @@ export const Container = ({
       },
     )
       .then((res) => {
-       
         setIsSubmitting(false);
         reset();
-        
+
         toast.success("A new place has been added successfully ");
       })
       .catch((e) => {
@@ -179,14 +176,7 @@ export const Container = ({
                     {...register("lng")}
                   />
                 </div>
-                <div className='col-lg-4 col-md-4 col-6'>
-                  <input
-                    type='number'
-                    name='rating'
-                    placeholder='Add Rating...'
-                    {...register("rating")}
-                  />
-                </div>
+
                 <div className='col-lg-4 col-md-4 col-6 '>
                   <input
                     type='file'
@@ -199,7 +189,6 @@ export const Container = ({
                     <span className={image ? "text-primary" : ""}>
                       {image ? "image selected" : "Upload Image"}
                     </span>
-                    <img src={upload} width='15px' alt='' />
                   </div>
                 </div>
               </div>

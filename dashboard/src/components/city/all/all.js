@@ -10,7 +10,7 @@ const All = ({ cities, services }) => {
     });
   };
   return (
-    <div className='all-border'>
+    <div className='all-border cities'>
       <Layout>
         <div className='alls'>
           <div className='btns'>

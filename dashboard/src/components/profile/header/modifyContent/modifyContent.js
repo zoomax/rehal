@@ -235,15 +235,6 @@ export const Container = ({ cityClicked, title, storeCities }) => {
                     {...register("lng")}
                   />
                 </div>
-                <div className='col-lg-4 col-md-4 col-6'>
-                  <input
-                    type='number'
-                    name='rating'
-                    placeholder='Add Rating...'
-                    step='0.0001'
-                    {...register("rating")}
-                  />
-                </div>
                 <div className='col-lg-4 col-md-4 col-6 '>
                   <input
                     type='file'
@@ -256,7 +247,6 @@ export const Container = ({ cityClicked, title, storeCities }) => {
                     <span className={image ? "text-primary" : ""}>
                       {image ? "image selected" : "Upload Image"}
                     </span>
-                    <img src={upload} width='15px' alt='' />
                   </div>
                 </div>
               </div>

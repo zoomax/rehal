@@ -10,7 +10,7 @@ const All = ({ services }) => {
   //   });
   // };
   return (
-    <div className='all-border'>
+    <div className='all-border services'>
       <Layout>
         <div className='alls'>
           <div className='btns'>

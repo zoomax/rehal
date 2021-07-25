@@ -33,8 +33,8 @@ function App() {
               return <Redirect path='/dashboard' />;
             }}
           />
-          import {(ToastContainer, toast)} from "react-toastify"; import
-          "react-toastify/dist/ReactToastify.css"; toast.configure();
+          {/* import {(ToastContainer, toast)} from "react-toastify"; import
+          "react-toastify/dist/ReactToastify.css"; toast.configure(); */}
         </Switch>
       </BrowserRouter>
       <ToastContainer />

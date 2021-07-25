@@ -152,7 +152,7 @@ export const Container = ({
               />
             </div>
 
-            <div className='col-lg-4 col-md-4 col-6 '>
+            {/* <div className='col-lg-4 col-md-4 col-6 '>
               <input
                 type='file'
                 name='rating'
@@ -164,9 +164,8 @@ export const Container = ({
                 <span className={image ? "text-primary" : ""}>
                   {image ? "image selected" : "Upload Image"}
                 </span>
-                <img src={upload} width='15px' alt='' />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className='col-md-3 col-3'>
             <button className='none' type='submit'>

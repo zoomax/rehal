@@ -26,7 +26,7 @@ const All = ({ places, services, cities }) => {
     history.push(`/rating/${id}`);
   };
   return (
-    <div className='all-border'>
+    <div className='all-border profile'>
       <Layout>
         <div className='alls'>
           <div className='btns' onClick={redirect}>

@@ -33,7 +33,6 @@ export const PlaceSchema = yup.object().shape({
   address: yup.string().required(),
   city: yup.number().required(),
   service: yup.number().required(),
-  rating: yup.number().min(1).max(5).required(),
   lat: yup
     .string()
     .required()
@@ -47,7 +46,6 @@ export const EditPlaceSchema = yup.object().shape({
   name: yup.string().required(),
   address: yup.string().required(),
   service: yup.number().required(),
-  rating: yup.number().min(1).max(5).required(),
   lat: yup
     .string()
     .required()

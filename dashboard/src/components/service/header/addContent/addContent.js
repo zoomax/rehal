@@ -92,7 +92,6 @@ export const Container = ({ addService }) => {
                 <span className={image ? "text-primary" : ""}>
                   {image ? "image selected" : "Upload Image"}
                 </span>
-                <img src={upload} width='15px' alt='' />
               </div>
             </div>
           </div>
